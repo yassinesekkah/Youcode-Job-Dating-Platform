@@ -83,9 +83,6 @@ class AuthController extends Controller
         Session::remove('admin');
         ///delete csrf token mn session
         Security::invalidateCsrfToken();
-
-        var_dump($_SESSION);
-die;
         ///redirection  lpage login admin
         $this->redirect('/admin/login');
     }

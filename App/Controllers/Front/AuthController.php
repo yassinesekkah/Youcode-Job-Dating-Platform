@@ -14,15 +14,14 @@ class AuthController extends Controller
 
     public function loginForm()
     {
-        View::render('auth/login', [
+        View::render('front/auth/login', [
             'csrf_token' => Security::generateCsrfToken()
         ]);
     }
 
-
     public function registerForm()
     {
-        View::render('auth/register', [
+        View::render('front/auth/register', [
             'csrf_token' => Security::generateCsrfToken()
         ]);
     }
@@ -41,12 +40,24 @@ class AuthController extends Controller
             ->required('email')
             ->email('email')
             ->required('password')
-            ->min('password', 6);
+            ->min('password', 6)
+            ->required('password_confirm');
 
         ////ila faila validator 3tini les errors
         if ($validator->fails()) {
-            View::render('auth/register', [
+            View::render('front/auth/register', [
                 'errors' => $validator->errors(),
+                'csrf_token' => Security::generateCsrfToken()
+            ]);
+            return;
+        }
+
+        // Password confirm
+        if ($_POST['password'] !== $_POST['password_confirm']) {
+            View::render('front/auth/register', [
+                'errors' => [
+                    'password' => ['Passwords do not match']
+                ],
                 'csrf_token' => Security::generateCsrfToken()
             ]);
             return;
@@ -55,12 +66,9 @@ class AuthController extends Controller
         ////validi had 3 key mn lpost
         $data = $validator->validated(['name', 'email', 'password']);
 
-        ///hash lpassword
-        $data['password'] = Security::hashPassword($data['password']);
-
         ///check wach deja kayen l email
         if (User::findByEmail($data['email'])) {
-            View::render('auth/register', [
+            View::render('front/auth/register', [
                 'errors' => [
                     'email' => ['Email déjà utilisé']
                 ],
@@ -68,6 +76,12 @@ class AuthController extends Controller
             ]);
             return;
         }
+
+        ///hash lpassword
+        $data['password'] = Security::hashPassword($data['password']);
+
+        // Role apprenant
+        $data['role'] = 'apprenant';
 
         ////creation 
         User::create($data);
@@ -92,7 +106,7 @@ class AuthController extends Controller
 
         ////ila faila validator 3tini les errors
         if ($validator->fails()) {
-            View::render('auth/login', [
+            View::render('front/auth/login', [
                 'errors' => $validator->errors(),
                 'csrf_token' => Security::generateCsrfToken()
             ]);
@@ -106,8 +120,8 @@ class AuthController extends Controller
         $user = User::findByEmail($data['email']);
 
         ////verification dyal login: user wel password dyal db m3a dyal post
-        if (!$user || !Security::verifyPassword($data['password'], $user['PASSWORD'])) {
-            View::render('auth/login', [
+        if (!$user || !Security::verifyPassword($data['password'], $user['password'])) {
+            View::render('front/auth/login', [
                 'errors' => [
                     'auth' => ['Email ou mot de passe incorrect']
                 ],
@@ -116,20 +130,31 @@ class AuthController extends Controller
             return;
         }
 
-        ///nstockiw user id f session avec role
+        // Verifier role = apprenant
+        if ($user['role'] !== 'apprenant') {
+            View::render('front/auth/login', [
+                'errors' => [
+                    'auth' => ['Accès refusé']
+                ],
+                'csrf_token' => Security::generateCsrfToken()
+            ]);
+            return;
+        }
+
+        // Session user (front)
         Session::set('user', [
-            'id' => $user['id'],
-            'role' => $user['role']
+            'id' => $user['id']
         ]);
 
         ////rediction
-        $this->redirect('/');
+        $this->redirect('/jobs');
     }
 
 
     public function logout()
     {
-        Session::destroy();
+        Session::remove('user');
+        Security::invalidateCsrfToken();
         $this->redirect('/login');
     }
 }

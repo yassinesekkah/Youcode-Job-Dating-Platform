@@ -35,4 +35,11 @@ $router->get('/admin/dashboard', 'Back\DashboardController@index');
 // Apprenant
 $router->get('/login', 'Front\AuthController@loginForm');
 $router->post('/login', 'Front\AuthController@login');
+$router->get('/register', 'Front\AuthController@registerForm');
+$router->post('/register', 'Front\AuthController@register');
+$router->get('/logout', 'Front\AuthController@logout');
+
+///jobs
+$router->get('/jobs', 'Front\JobController@index');
+
 
