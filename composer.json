@@ -1,0 +1,15 @@
+{
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
+  },
+  
+  "config": {
+    "optimize-autoloader": false,
+    "apcu-autoloader": false
+  },
+  "require": {
+    "twig/twig": "^3.22"
+  }
+}
