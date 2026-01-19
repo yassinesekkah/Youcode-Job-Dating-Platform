@@ -23,9 +23,14 @@ $router->post('/register', 'Front\\AuthController@register');
 // $router->get('/twig', 'Back\\AdminController@test');
 
 
-// Admin
-$router->get('/admin/login', 'Back\AdminController@loginForm');
+// Admin login
+$router->get('/admin/login', 'Back\AuthController@loginForm');
 $router->post('/admin/login', 'Back\AuthController@login');
+
+
+
+// Admin dashboard
+$router->get('/admin/dashboard', 'Back\DashboardController@index');
 
 // Apprenant
 $router->get('/login', 'Front\AuthController@loginForm');

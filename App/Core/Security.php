@@ -42,6 +42,8 @@ class Security
         }
     }
 
+   
+
     public static function hashPassword(string $password): string
     {
         return password_hash($password, PASSWORD_DEFAULT);
@@ -52,30 +54,27 @@ class Security
         return password_verify($password, $hash);
     }
 
-    ///check lconexion
+    // FRONT ==> Apprenant
     public static function requireAuth(): void
     {
         if (!Session::has('user')) {
-            http_response_code(401);
-            exit('Unauthorized');
+            header('Location: /login');
+            exit;
         }
     }
 
-    ///check Role
-    public static function requireRole(string $role): void
+    // BACK ==> Admin
+    public static function requireAdmin(): void
     {
-        self::requireAuth();
-
-        if (Session::get('user')['role'] !== $role) {
-            http_response_code(403);
-            View::render('errors/403');
+        if (!Session::has('admin')) {
+            header('Location: /admin/login');
             exit;
         }
     }
 
     public static function isAdmin(): bool
     {
-        return Session::has('user') && Session::get('user')['role'] === 'admin';
+        return Session::has('admin');
     }
 
 
