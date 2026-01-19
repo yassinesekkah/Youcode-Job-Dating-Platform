@@ -1,0 +1,77 @@
+{% extends "layouts/layout.twig" %}
+
+{% block content %}
+
+{% if errors %}
+    <div class="alert alert-danger">
+        <ul>
+            {% for field, messages in errors %}
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+<div class="login-container">
+    <div class="logo">
+        <h1>Create Account</h1>
+        <p>Register to access job opportunities</p>
+    </div>
+
+    <form action="/register" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token|default('') }}">
+
+        <div class="form-group">
+            <label for="name">Full Name</label>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Your full name"
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="you@example.com"
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Create a password"
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="password_confirm">Confirm Password</label>
+            <input
+                type="password"
+                id="password_confirm"
+                name="password_confirm"
+                placeholder="Confirm your password"
+            >
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Sign Up 
+        </button>
+    </form>
+
+    <div class="register-link">
+        Already have an account?
+        <a href="/login">Sign in</a>
+    </div>
+</div>
+
+{% endblock %}
