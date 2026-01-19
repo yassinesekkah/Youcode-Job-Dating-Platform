@@ -28,7 +28,6 @@ $router->get('/admin/login', 'Back\AuthController@loginForm');
 $router->post('/admin/login', 'Back\AuthController@login');
 $router->get('/admin/logout', 'Back\AuthController@logout');
 
-
 // Admin dashboard
 $router->get('/admin/dashboard', 'Back\DashboardController@index');
 
@@ -41,5 +40,8 @@ $router->get('/logout', 'Front\AuthController@logout');
 
 ///jobs
 $router->get('/jobs', 'Front\JobController@index');
+//creation des annonneces
+$router->get('/admin/announcements/create', 'Back\AnnouncementController@createForm');
+$router->post('/admin/announcements/create', 'Back\AnnouncementController@store');
 
 
