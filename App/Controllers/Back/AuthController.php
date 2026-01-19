@@ -77,5 +77,13 @@ class AuthController extends Controller
         $this->redirect('/admin/dashboard');
     }
 
-    
+    public function logout(): void
+    {
+        ///delete admin mn session
+        Session::remove('admin');
+        ///delete csrf token mn session
+        Security::invalidateCsrfToken();
+        ///redirection  lpage login admin
+        $this->redirect('/admin/login');
+    }
 }

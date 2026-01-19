@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Core;
 
@@ -9,13 +9,13 @@ class Validator
 
     public function __construct(array $data)
     {
-        $this -> data = $data;
+        $this->data = $data;
     }
 
     public function required(string $field): self
     {
-        if(empty(trim($this->data[$field]?? ''))){
-            $this -> errors[$field][] = 'Ce champ est obligatoire';
+        if (empty(trim($this->data[$field] ?? ''))) {
+            $this->errors[$field][] = 'Ce champ est obligatoire';
         }
 
         return $this;
@@ -23,17 +23,17 @@ class Validator
 
     public function email(string $field): self
     {
-        if(!filter_var($this->data[$field]?? '', FILTER_VALIDATE_EMAIL)){
-            $this -> errors[$field][] = "Email invalide";
+        if (!filter_var($this->data[$field] ?? '', FILTER_VALIDATE_EMAIL)) {
+            $this->errors[$field][] = "Email invalide";
         }
 
         return $this;
     }
 
     public function min(string $field, int $length): self
-    {   
-        if(strlen($this->data[$field] ?? '') < $length){
-            $this -> errors[$field][] = "Minimum {$length} caractères";
+    {
+        if (strlen($this->data[$field] ?? '') < $length) {
+            $this->errors[$field][] = "Minimum {$length} caractères";
         }
 
         return $this;
@@ -41,21 +41,29 @@ class Validator
 
     public function fails(): bool
     {
-        return !empty($this -> errors);
+        return !empty($this->errors);
     }
 
     public function errors(): array
     {
-        return $this -> errors;
+        return $this->errors;
     }
 
     public function validated(array $fields): array
     {
         $result = [];
-        
-        foreach($fields as $field){
-            if(isset($this-> data[$field]) && $this ->data[$field] !== ''){
-                $result[$field] = $this -> data[$field];
+
+        foreach ($fields as $field) {
+            if (isset($this->data[$field]) && $this->data[$field] !== '') {
+
+                $value = $this->data[$field];
+
+                // Trim spaces
+                if (is_string($value)) {
+                    $value = trim($value);
+                }
+
+                $result[$field] = $value;
             }
         }
         return $result;

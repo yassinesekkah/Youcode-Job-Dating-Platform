@@ -1,0 +1,106 @@
+{% extends "layouts/back.twig" %}
+
+{% block content %}
+
+<div class="flex justify-center px-4">
+    <div class="w-full max-w-lg bg-white rounded-lg shadow-md p-6">
+
+        <h2 class="text-xl font-semibold text-gray-800 mb-5 text-center">
+            Create Job Announcement
+        </h2>
+
+        {# Errors #}
+        {% if errors %}
+        <div class="mb-4 rounded-md bg-red-100 border border-red-300 text-red-700 p-3">
+            <ul class="list-disc list-inside text-xs">
+                {% for field, messages in errors %}
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <form action="/admin/announcements/create" method="POST" class="space-y-3" enctype="multipart/form-data">
+
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">
+                    Job Title
+                </label>
+                <input type="text" name="title" placeholder="Ex: Web Developer" required class="w-full rounded-md border border-gray-300 px-3 py-1.5 text-sm
+                           focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            </div>
+
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">
+                    Image (optional)
+                </label>
+                <input type="file" name="image" accept="image/*" class="w-full text-sm">
+            </div>
+
+
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">
+                    Company
+                </label>
+                <select name="company_id" required class="w-full rounded-md border border-gray-300 px-3 py-1.5 text-sm bg-white
+                           focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <option value="">-- Select company --</option>
+                    {% for company in companies|default([]) %}
+                    <option value="{{ company.id }}">{{ company.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">
+                    Contract Type
+                </label>
+                <select name="contract_type" required class="w-full rounded-md border border-gray-300 px-3 py-1.5 text-sm bg-white
+                           focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <option value="">-- Select type --</option>
+                    <option value="CDI">CDI</option>
+                    <option value="CDD">CDD</option>
+                    <option value="Stage">Stage</option>
+                    <option value="Freelance">Freelance</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">
+                    Location
+                </label>
+                <input type="text" name="location" placeholder="Ex: Casablanca" required class="w-full rounded-md border border-gray-300 px-3 py-1.5 text-sm
+                           focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            </div>
+
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">
+                    Job Description
+                </label>
+                <textarea name="description" rows="3" placeholder="Describe the job..." required class="w-full rounded-md border border-gray-300 px-3 py-1.5 text-sm
+                           focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+            </div>
+
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">
+                    Skills (optional)
+                </label>
+                <textarea name="skills" rows="2" placeholder="PHP, MySQL, MVC..." class="w-full rounded-md border border-gray-300 px-3 py-1.5 text-sm
+                           focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+            </div>
+
+            <button type="submit" class="w-full bg-indigo-600 text-white py-1.5 rounded-md
+                       text-sm font-medium hover:bg-indigo-700 transition">
+                Create Announcement
+            </button>
+
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}
