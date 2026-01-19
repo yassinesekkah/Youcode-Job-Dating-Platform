@@ -26,7 +26,7 @@ $router->post('/register', 'Front\\AuthController@register');
 // Admin login
 $router->get('/admin/login', 'Back\AuthController@loginForm');
 $router->post('/admin/login', 'Back\AuthController@login');
-
+$router->get('/admin/logout', 'Back\AuthController@logout');
 
 
 // Admin dashboard

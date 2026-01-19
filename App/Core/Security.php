@@ -42,8 +42,11 @@ class Security
         }
     }
 
+    public static function invalidateCsrfToken(): void
+    {
+        Session::remove('csrf_token');
+    }
    
-
     public static function hashPassword(string $password): string
     {
         return password_hash($password, PASSWORD_DEFAULT);
