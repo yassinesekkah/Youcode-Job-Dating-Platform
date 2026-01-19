@@ -16,8 +16,10 @@ class AdminController extends Controller
             'title' => 'Admin Dashboard'
         ], 'back');
     }
-    public function test(): void
+    public function loginform(): void
     {
-        $this->render("/login");
+        View::render('admin', [
+            'csrf_token' => Security::generateCsrfToken()
+        ]);
     }
 }

@@ -5,6 +5,9 @@ use App\Core\Security; ?>
 
 <h2><?= $title ?></h2>
 
+<?php echo password_hash("user123", PASSWORD_DEFAULT); ?>
+
+
 <ul>
     <?php foreach ($users as $user): ?>
         <li>

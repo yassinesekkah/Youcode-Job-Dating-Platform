@@ -15,12 +15,19 @@ $router->post('/users/delete', 'Front\\HomeController@delete');
 $router->get('/register', 'Front\\AuthController@registerForm');
 $router->post('/register', 'Front\\AuthController@register');
 
-$router->get('/login', 'Front\\AuthController@loginForm');
-$router->post('/login', 'Front\\AuthController@login');
-$router->get('/logout', 'Front\\AuthController@logout');
+// $router->get('/login', 'Front\\AuthController@loginForm');
+// $router->post('/login', 'Front\\AuthController@login');
+// $router->get('/logout', 'Front\\AuthController@logout');
 
 //admin routes
-$router->get('/twig', 'Back\\AdminController@test');
+// $router->get('/twig', 'Back\\AdminController@test');
 
 
+// Admin
+$router->get('/admin/login', 'Back\AdminController@loginForm');
+$router->post('/admin/login', 'Back\AuthController@login');
+
+// Apprenant
+$router->get('/login', 'Front\AuthController@loginForm');
+$router->post('/login', 'Front\AuthController@login');
 
