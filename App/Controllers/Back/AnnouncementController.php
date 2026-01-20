@@ -94,10 +94,10 @@ class AnnouncementController extends Controller
 
 
         ////insert
-        Announcement::create($data);
+        $result = Announcement::create($data);
 
         ///check create
-        if (!Announcement::create($data)) {
+        if (!$result) {
             Session::set('error', 'Error while creating announcement');
             $this->redirect('/admin/announcements/create');
             return;
@@ -107,6 +107,123 @@ class AnnouncementController extends Controller
         Session::set('success', 'Announcement created successfully');
 
         ////rediction
+        $this->redirect('/admin/announcements');
+    }
+
+    public function index(): void
+    {
+        Security::requireAdmin();
+
+        $announcements = Announcement::getActiveWithCompanies();
+
+        View::render('back/announcements/index', [
+            'announcements' => $announcements
+        ]);
+    }
+
+    public function editForm()
+    {
+        Security::requireAdmin();
+
+        $id = $_GET['id'] ?? null;
+
+        if (!$id) {
+            Session::set('error', 'Invalid announcement');
+            $this->redirect('/admin/announcements');
+            return;
+        }
+
+        $announcement = Announcement::find($id);
+        $companies = Company::all();
+
+        View::render('back/announcements/edit', [
+            'announcement' => $announcement,
+            'companies' => $companies,
+            'csrf_token' => Security::generateCsrfToken()
+        ]);
+    }
+
+    public function update(): void
+    {
+        Security::requireAdmin();
+
+        // CSRF
+        Security::checkCsrfOrFail($_POST['csrf_token'] ?? null);
+
+        $id = $_GET['id'] ?? null;
+
+        if (!$id) {
+            Session::set('error', 'Invalid announcement');
+            $this->redirect('/admin/announcements');
+            return;
+        }
+
+        // Validation
+        $validator = new Validator($_POST);
+        $validator
+            ->required('title')
+            ->required('company_id')
+            ->required('contract_type')
+            ->required('location')
+            ->required('description');
+
+        if ($validator->fails()) {
+            View::render('back/announcements/edit', [
+                'errors' => $validator->errors(),
+                'announcement' => Announcement::find($id),
+                'companies' => Company::all(),
+                'csrf_token' => Security::generateCsrfToken()
+            ]);
+            return;
+        }
+
+        // Data validee
+        $data = $validator->validated([
+            'title',
+            'company_id',
+            'contract_type',
+            'location',
+            'description',
+            'skills'
+        ]);
+
+        //image
+        if (!empty($_FILES['image']['name'])) {
+
+            $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+            $fileType = mime_content_type($_FILES['image']['tmp_name']);
+
+            if (!in_array($fileType, $allowedTypes)) {
+                View::render('back/announcements/edit', [
+                    'errors' => ['image' => ['Invalid image format']],
+                    'announcement' => Announcement::find($id),
+                    'companies' => Company::all(),
+                    'csrf_token' => Security::generateCsrfToken()
+                ]);
+                return;
+            }
+
+            $extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+            $fileName = uniqid('ann_') . '.' . $extension;
+            $uploadDir = __DIR__ . '/../../../public/assets/images/';
+
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+
+            move_uploaded_file($_FILES['image']['tmp_name'], $uploadDir . $fileName);
+
+            $data['image'] = '/assets/images/' . $fileName;
+        }
+
+        // update annonce
+        if (!Announcement::update($id, $data)) {
+            Session::set('error', 'Update failed');
+            $this->redirect('/admin/announcements/edit?id=' . $id);
+            return;
+        }
+
+        Session::set('success', 'Announcement updated successfully');
         $this->redirect('/admin/announcements');
     }
 }

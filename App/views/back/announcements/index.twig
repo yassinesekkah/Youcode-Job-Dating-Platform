@@ -1,0 +1,79 @@
+{% extends "layouts/back.twig" %}
+
+{% block content %}
+
+<div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-semibold text-gray-800">
+        Job Announcements
+    </h1>
+
+    <a href="/admin/announcements/create"
+        class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition">
+        + Create Announcement
+    </a>
+</div>
+
+<div class="bg-white rounded-xl shadow overflow-x-auto">
+    <table class="min-w-full text-sm text-left text-gray-600">
+        <thead class="bg-gray-100 text-gray-700 uppercase text-xs">
+            <tr>
+                <th class="px-6 py-3">Image</th>
+                <th class="px-6 py-3">Title</th>
+                <th class="px-6 py-3">Company</th>
+                <th class="px-6 py-3">Contract</th>
+                <th class="px-6 py-3">Location</th>
+                <th class="px-6 py-3 text-center">Actions</th>
+            </tr>
+        </thead>
+
+        <tbody class="divide-y">
+            {% for announcement in announcements %}
+            <tr class="hover:bg-gray-50">
+                <td class="px-6 py-3">
+                    {% if announcement.image %}
+                    <img src="{{ announcement.image }}" alt="image" class="w-14 h-14 object-cover rounded-md">
+                    {% else %}
+                    <span class="text-gray-400 text-xs">No image</span>
+                    {% endif %}
+                </td>
+
+                <td class="px-6 py-3 font-medium text-gray-800">
+                    {{ announcement.title }}
+                </td>
+
+                <td class="px-6 py-3">
+                    {{ announcement.company }}
+                </td>
+
+                <td class="px-6 py-3">
+                    {{ announcement.contract_type }}
+                </td>
+
+                <td class="px-6 py-3">
+                    {{ announcement.location }}
+                </td>
+
+                <td class="px-6 py-3 text-center space-x-3">
+                    <a href="/admin/announcements/edit?id={{ announcement.id }}"
+                        class="text-indigo-600 hover:underline text-sm font-medium">
+                        Edit
+                    </a>
+
+                    <a href="#" class="text-red-600 hover:underline text-sm font-medium">
+                        Archive
+                    </a>
+                </td>
+
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6" class="px-6 py-6 text-center text-gray-500">
+                    No announcements found.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

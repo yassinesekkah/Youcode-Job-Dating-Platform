@@ -5,15 +5,15 @@ use App\core\Router;
 
 $router->get('/', 'Front\\HomeController@index');
 
-$router->get('/test', 'Front\\TestController@form');
-$router->post('/test', 'Front\\TestController@submit');
+// $router->get('/test', 'Front\\TestController@form');
+// $router->post('/test', 'Front\\TestController@submit');
 
-$router->post('/users/store', 'Front\\HomeController@store');
-$router->post('/users/update', 'Front\\HomeController@update');
-$router->post('/users/delete', 'Front\\HomeController@delete');
+// $router->post('/users/store', 'Front\\HomeController@store');
+// $router->post('/users/update', 'Front\\HomeController@update');
+// $router->post('/users/delete', 'Front\\HomeController@delete');
 
-$router->get('/register', 'Front\\AuthController@registerForm');
-$router->post('/register', 'Front\\AuthController@register');
+// $router->get('/register', 'Front\\AuthController@registerForm');
+// $router->post('/register', 'Front\\AuthController@register');
 
 // $router->get('/login', 'Front\\AuthController@loginForm');
 // $router->post('/login', 'Front\\AuthController@login');
@@ -43,5 +43,12 @@ $router->get('/jobs', 'Front\JobController@index');
 //creation des annonneces
 $router->get('/admin/announcements/create', 'Back\AnnouncementController@createForm');
 $router->post('/admin/announcements/create', 'Back\AnnouncementController@store');
+///affichage des annonneces active
+$router->get('/admin/announcements', 'Back\AnnouncementController@index');
+///edit une annonce
+$router->get('/admin/announcements/edit', 'Back\AnnouncementController@editForm');
+$router->post('/admin/announcements/update', 'Back\AnnouncementController@update');
+
+
 
 
