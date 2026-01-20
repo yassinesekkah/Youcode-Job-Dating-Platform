@@ -45,5 +45,10 @@ $router->get('/admin/announcements/create', 'Back\AnnouncementController@createF
 $router->post('/admin/announcements/create', 'Back\AnnouncementController@store');
 ///affichage des annonneces active
 $router->get('/admin/announcements', 'Back\AnnouncementController@index');
+///edit une annonce
+$router->get('/admin/announcements/edit', 'Back\AnnouncementController@editForm');
+$router->post('/admin/announcements/update', 'Back\AnnouncementController@update');
+
+
 
 

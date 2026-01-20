@@ -51,13 +51,18 @@ abstract class Model
     ///update
     public static function update(int $id, array $data): bool
     {
-        $fields = array_keys($data);
-        $setClause = implode(', ', array_map(
-            fn($field) => "$field = :$field",
-            $fields
-        ));
+        $fields = [];
 
-        $sql = "UPDATE " . static::$table . " SET $setClause WHERE id = :id";
+        foreach ($data as $key => $value) {
+            $fields[] = "$key = :$key";
+        }
+
+        $fields[] = "updated_at = NOW()";
+
+        $sql = "UPDATE " . static::$table . "
+            SET " . implode(', ', $fields) . "
+            WHERE id = :id";
+
         $data['id'] = $id;
 
         $stmt = self::$db->prepare($sql);

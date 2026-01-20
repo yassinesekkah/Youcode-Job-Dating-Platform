@@ -1,0 +1,163 @@
+{% extends "layouts/back.twig" %}
+
+{% block content %}
+
+<div class="flex justify-center px-4">
+    <div class="w-full max-w-lg bg-white rounded-lg shadow-md p-6">
+
+        <h2 class="text-xl font-semibold text-gray-800 mb-5 text-center">
+            Edit Job Announcement
+        </h2>
+
+        {# Errors #}
+        {% if errors %}
+        <div class="mb-4 rounded-md bg-red-100 border border-red-300 text-red-700 p-3">
+            <ul class="list-disc list-inside text-xs">
+                {% for field, messages in errors %}
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <form
+            action="/admin/announcements/update?id={{ announcement.id }}"
+            method="POST"
+            class="space-y-3"
+            enctype="multipart/form-data"
+        >
+
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+            {# Title #}
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">
+                    Job Title
+                </label>
+                <input
+                    type="text"
+                    name="title"
+                    value="{{ announcement.title }}"
+                    required
+                    class="w-full rounded-md border border-gray-300 px-3 py-1.5 text-sm
+                           focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                >
+            </div>
+
+            {# Image preview #}
+            {% if announcement.image %}
+                <div>
+                    <p class="text-xs text-gray-500 mb-1">Current image</p>
+                    <img src="{{ announcement.image }}" class="h-20 rounded mb-2">
+                </div>
+            {% endif %}
+
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">
+                    Change Image (optional)
+                </label>
+                <input type="file" name="image" accept="image/*" class="w-full text-sm">
+            </div>
+
+            {# Company #}
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">
+                    Company
+                </label>
+                <select
+                    name="company_id"
+                    required
+                    class="w-full rounded-md border border-gray-300 px-3 py-1.5 text-sm bg-white
+                           focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                >
+                    {% for company in companies %}
+                        <option
+                            value="{{ company.id }}"
+                            {% if company.id == announcement.company_id %}selected{% endif %}
+                        >
+                            {{ company.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            {# Contract type #}
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">
+                    Contract Type
+                </label>
+                <select
+                    name="contract_type"
+                    required
+                    class="w-full rounded-md border border-gray-300 px-3 py-1.5 text-sm bg-white
+                           focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                >
+                    {% for type in ['CDI','CDD','Stage','Freelance'] %}
+                        <option
+                            value="{{ type }}"
+                            {% if announcement.contract_type == type %}selected{% endif %}
+                        >
+                            {{ type }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            {# Location #}
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">
+                    Location
+                </label>
+                <input
+                    type="text"
+                    name="location"
+                    value="{{ announcement.location }}"
+                    required
+                    class="w-full rounded-md border border-gray-300 px-3 py-1.5 text-sm
+                           focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                >
+            </div>
+
+            {# Description #}
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">
+                    Job Description
+                </label>
+                <textarea
+                    name="description"
+                    rows="3"
+                    required
+                    class="w-full rounded-md border border-gray-300 px-3 py-1.5 text-sm
+                           focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                >{{ announcement.description }}</textarea>
+            </div>
+
+            {# Skills #}
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">
+                    Skills (optional)
+                </label>
+                <textarea
+                    name="skills"
+                    rows="2"
+                    class="w-full rounded-md border border-gray-300 px-3 py-1.5 text-sm
+                           focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                >{{ announcement.skills }}</textarea>
+            </div>
+
+            <button
+                type="submit"
+                class="w-full bg-indigo-600 text-white py-1.5 rounded-md
+                       text-sm font-medium hover:bg-indigo-700 transition"
+            >
+                Update Announcement
+            </button>
+
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}
