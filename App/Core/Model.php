@@ -78,4 +78,15 @@ abstract class Model
 
         return $stmt->execute(['id' => $id]);
     }
+
+    ///archived
+    public static function softDelete(int $id): bool
+    {
+        $sql = "UPDATE " . static::$table . "
+            SET deleted = 1, updated_at = NOW()
+            WHERE id = :id";
+
+        $stmt = self::$db->prepare($sql);
+        return $stmt->execute(['id' => $id]);
+    }
 }

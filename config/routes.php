@@ -48,6 +48,8 @@ $router->get('/admin/announcements', 'Back\AnnouncementController@index');
 ///edit une annonce
 $router->get('/admin/announcements/edit', 'Back\AnnouncementController@editForm');
 $router->post('/admin/announcements/update', 'Back\AnnouncementController@update');
+////les annonces archive
+$router->get('/admin/announcements/archive', 'Back\AnnouncementController@archive');
 
 
 
