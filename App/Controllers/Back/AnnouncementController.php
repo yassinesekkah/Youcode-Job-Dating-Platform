@@ -94,10 +94,10 @@ class AnnouncementController extends Controller
 
 
         ////insert
-        Announcement::create($data);
+        $result = Announcement::create($data);
 
         ///check create
-        if (!Announcement::create($data)) {
+        if (!$result) {
             Session::set('error', 'Error while creating announcement');
             $this->redirect('/admin/announcements/create');
             return;
@@ -108,5 +108,16 @@ class AnnouncementController extends Controller
 
         ////rediction
         $this->redirect('/admin/announcements');
+    }
+
+    public function index(): void
+    {
+        Security::requireAdmin();
+
+        $announcements = Announcement::getActiveWithCompanies();
+
+        View::render('back/announcements/index', [
+            'announcements' => $announcements
+        ]);
     }
 }

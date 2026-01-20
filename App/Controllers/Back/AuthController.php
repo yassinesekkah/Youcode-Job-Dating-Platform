@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controllers\Back;
 
 use App\Core\Controller;
