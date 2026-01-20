@@ -14,10 +14,12 @@ class Announcement extends Model
                 JOIN companies ON companies.id = announcements.company_id
                 WHERE announcements.deleted = 0 
                 ORDER BY announcements.created_at DESC";
-        
-        $stmt = self::$db -> prepare($sql);
-        $stmt -> execute();
+
+        $stmt = self::$db->prepare($sql);
+        $stmt->execute();
 
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
+
+    
 }
