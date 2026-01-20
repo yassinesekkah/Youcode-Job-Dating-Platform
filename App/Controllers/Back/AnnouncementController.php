@@ -226,4 +226,26 @@ class AnnouncementController extends Controller
         Session::set('success', 'Announcement updated successfully');
         $this->redirect('/admin/announcements');
     }
+
+    public function archive(): void
+    {
+        Security::requireAdmin();
+
+        $id = $_GET['id'] ?? null;
+
+        if (!$id) {
+            Session::set('error', 'Invalid announcement');
+            $this->redirect('/admin/announcements');
+            return;
+        }
+
+        if(!Announcement::softDelete($id)){
+            Session::set("error", "Failed to archive announcement");
+            $this -> redirect("/admin/announcements");
+            return;
+        }
+
+        Session::set('success', "Announcement archived successfully");
+        $this -> redirect('/admin/announcements');
+    }
 }
