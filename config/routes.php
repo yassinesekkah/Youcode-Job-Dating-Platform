@@ -32,6 +32,7 @@ $router->get('/admin/logout', 'Back\AuthController@logout');
 $router->get('/admin/dashboard', 'Back\DashboardController@index');
 
 // Apprenant
+// $router->get('/login', 'Front\TestController@index');
 $router->get('/login', 'Front\AuthController@loginForm');
 $router->post('/login', 'Front\AuthController@login');
 $router->get('/register', 'Front\AuthController@registerForm');
@@ -39,7 +40,12 @@ $router->post('/register', 'Front\AuthController@register');
 $router->get('/logout', 'Front\AuthController@logout');
 
 ///jobs
+// $router->get('/jobs', 'Front\JobController@index');
 $router->get('/jobs', 'Front\JobController@index');
+$router->get('/announcements/{id}', 'AnnouncementController@show');
+
+
+
 //creation des annonneces
 $router->get('/admin/announcements/create', 'Back\AnnouncementController@createForm');
 $router->post('/admin/announcements/create', 'Back\AnnouncementController@store');
@@ -50,6 +56,14 @@ $router->get('/admin/announcements/edit', 'Back\AnnouncementController@editForm'
 $router->post('/admin/announcements/update', 'Back\AnnouncementController@update');
 ////les annonces archive
 $router->get('/admin/announcements/archive', 'Back\AnnouncementController@archive');
+///archived annonneces afichage
+$router->get('/admin/announcements/archived', 'Back\AnnouncementController@archivedIndex');
+////restor anonnece
+$router->get('/admin/announcements/restore', 'Back\AnnouncementController@restore');    
+///company create
+$router->get('/admin/companies/create', "Back\CompanyController@createForm");
+$router->post('/admin/companies/create', "Back\CompanyController@store");
+
 
 
 
