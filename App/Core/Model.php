@@ -100,4 +100,17 @@ abstract class Model
         $stmt = self::$db->prepare($sql);
         return $stmt->execute(['id' => $id]);
     }
+
+    ///is email exists
+    public static function emailExists(string $email): bool
+    {
+        $sql = "SELECT id FROM " . static::$table . " WHERE email = :email LIMIT 1";
+
+        $stmt = self::$db->prepare($sql);
+        $stmt->execute([
+            'email' => $email
+        ]);
+
+        return (bool) $stmt->fetch();
+    }
 }
