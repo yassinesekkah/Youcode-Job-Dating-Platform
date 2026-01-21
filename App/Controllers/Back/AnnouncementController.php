@@ -118,8 +118,9 @@ class AnnouncementController extends Controller
 
         View::render('back/announcements/index', [
             'announcements' => $announcements,
-            'csrf_token' => Security::generateCsrfToken()
+            'csrf_token' => Security::generateCsrfToken(),
         ]);
+
     }
 
     public function editForm()
