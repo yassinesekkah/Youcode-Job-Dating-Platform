@@ -50,6 +50,11 @@ $router->get('/admin/announcements/edit', 'Back\AnnouncementController@editForm'
 $router->post('/admin/announcements/update', 'Back\AnnouncementController@update');
 ////les annonces archive
 $router->get('/admin/announcements/archive', 'Back\AnnouncementController@archive');
+///archived annonneces afichage
+$router->get('/admin/announcements/archived', 'Back\AnnouncementController@archivedIndex');
+////restor anonnece
+$router->get('/admin/announcements/restore', 'Back\AnnouncementController@restore');
+
 
 
 

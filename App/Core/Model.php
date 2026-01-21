@@ -89,4 +89,15 @@ abstract class Model
         $stmt = self::$db->prepare($sql);
         return $stmt->execute(['id' => $id]);
     }
+
+    ///restore 
+    public static function restore(int $id): bool
+    {
+        $sql = "UPDATE " . static::$table . "
+            SET deleted = 0, updated_at = NOW()
+            WHERE id = :id";
+
+        $stmt = self::$db->prepare($sql);
+        return $stmt->execute(['id' => $id]);
+    }
 }
