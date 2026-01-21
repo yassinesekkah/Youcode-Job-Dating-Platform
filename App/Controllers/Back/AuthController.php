@@ -12,7 +12,9 @@ class AuthController extends Controller
 {
 
     public function loginForm(): void
-    {
+    {   
+        Security::redirectIfAdminLogged();
+        
         View::render('back/auth/login', [
             'csrf_token' => Security::generateCsrfToken()
         ]);
