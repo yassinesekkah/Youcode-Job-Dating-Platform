@@ -32,6 +32,7 @@ $router->get('/admin/logout', 'Back\AuthController@logout');
 $router->get('/admin/dashboard', 'Back\DashboardController@index');
 
 // Apprenant
+// $router->get('/login', 'Front\TestController@index');
 $router->get('/login', 'Front\AuthController@loginForm');
 $router->post('/login', 'Front\AuthController@login');
 $router->get('/register', 'Front\AuthController@registerForm');
@@ -39,7 +40,12 @@ $router->post('/register', 'Front\AuthController@register');
 $router->get('/logout', 'Front\AuthController@logout');
 
 ///jobs
+// $router->get('/jobs', 'Front\JobController@index');
 $router->get('/jobs', 'Front\JobController@index');
+$router->get('/announcements/{id}', 'AnnouncementController@show');
+
+
+
 //creation des annonneces
 $router->get('/admin/announcements/create', 'Back\AnnouncementController@createForm');
 $router->post('/admin/announcements/create', 'Back\AnnouncementController@store');

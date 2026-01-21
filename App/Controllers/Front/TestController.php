@@ -7,8 +7,8 @@ use App\Core\Controller;
 // use App\Core\View;
 
 
-// class TestController extends Controller
-// {
+class TestController extends Controller
+{
 //     public function form(){
 //         View::render("test/form");
 //     }
@@ -28,5 +28,10 @@ use App\Core\Controller;
 
 //         echo "Donnees valides";
 //     }
+public function index(){
+    echo"login ";
+}
 
-// }
+}
+
+
