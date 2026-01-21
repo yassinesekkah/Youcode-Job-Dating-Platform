@@ -59,7 +59,10 @@ $router->get('/admin/announcements/archive', 'Back\AnnouncementController@archiv
 ///archived annonneces afichage
 $router->get('/admin/announcements/archived', 'Back\AnnouncementController@archivedIndex');
 ////restor anonnece
-$router->get('/admin/announcements/restore', 'Back\AnnouncementController@restore');
+$router->get('/admin/announcements/restore', 'Back\AnnouncementController@restore');    
+///company create
+$router->get('/admin/companies/create', "Back\CompanyController@createForm");
+$router->post('/admin/companies/create', "Back\CompanyController@store");
 
 
 
