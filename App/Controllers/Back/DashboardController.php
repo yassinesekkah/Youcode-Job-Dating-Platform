@@ -19,7 +19,7 @@ class DashboardController extends Controller
             'activeAnnouncements'   => Announcement::countActive(),
             'archivedAnnouncements' => Announcement::countArchived(),
             'companiesCount'        => Company::countAll(),
-            'studentsCount'         => Student::countAll(),
+            'studentsCount'         => Student::countStudent(),
         ];
 
         View::render('back/dashboard/index', $data);

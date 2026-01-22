@@ -16,4 +16,12 @@ class Student extends Model
 
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
+
+    public static function countStudent(): int
+    {
+        $sql = "SELECT count(*) FROM users WHERE ROLE = 'apprenant'";
+        $stmt = self::$db->prepare($sql);
+        $stmt->execute();
+        return (int) $stmt -> fetchColumn();
+    }
 }
