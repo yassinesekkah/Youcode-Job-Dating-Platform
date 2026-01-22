@@ -126,4 +126,5 @@ abstract class Model
         
         return (bool) $stmt->fetch();
     }
+
 }

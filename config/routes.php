@@ -77,6 +77,9 @@ $router->post('/admin/companies/update', 'Back\\CompanyController@update');
 $router->get('/admin/companies/delete', 'Back\\CompanyController@delete');
 
 
+///student affichage
+$router->get('/admin/students', "Back\\StudentController@index");
+
 
 
 
