@@ -48,5 +48,20 @@ class Announcement extends Model
 
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
+
+    public static function countActive(): int
+    {
+        $sql = "SELECT COUNT(*) FROM announcements WHERE deleted = 0";
+        $stmt = self::$db->prepare($sql);
+        $stmt->execute();
+        return (int) $stmt->fetchColumn();
+    }
     
+    public static function countArchived(): int
+    {
+        $sql = "SELECT COUNT(*) FROM announcements WHERE deleted = 1";
+        $stmt = self::$db->prepare($sql);
+        $stmt->execute();
+        return (int) $stmt->fetchColumn();
+    }
 }
