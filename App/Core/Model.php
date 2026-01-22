@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Core;
 
 abstract class Model
@@ -110,6 +111,19 @@ abstract class Model
             'email' => $email
         ]);
 
+        return (bool) $stmt->fetch();
+    }
+
+    public static function emailExistsExcept(string $email, int $id): bool
+    {
+        $sql = "SELECT id FROM " . static::$table . " WHERE email = :email AND id != :id LIMIT 1";
+
+        $stmt = self::$db->prepare($sql);
+        $stmt->execute([
+            'email' => $email,
+            'id' => $id
+        ]);
+        
         return (bool) $stmt->fetch();
     }
 }
