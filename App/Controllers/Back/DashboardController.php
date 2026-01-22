@@ -1,19 +1,27 @@
 <?php
+
 namespace App\Controllers\Back;
 
 use App\Core\Controller;
 use App\Core\Security;
 use App\core\View;
+use App\Models\Announcement;
+use App\Models\Company;
+use App\Models\Student;
 
 class DashboardController extends Controller
 {
     public function index(): void
     {
-        // check dyal role
         Security::requireAdmin();
 
-        View::render('back/dashboard/index',[
-            'csrf_token' => Security::generateCsrfToken()
-        ]);
+        $data = [
+            'activeAnnouncements'   => Announcement::countActive(),
+            'archivedAnnouncements' => Announcement::countArchived(),
+            'companiesCount'        => Company::countAll(),
+            'studentsCount'         => Student::countStudent(),
+        ];
+
+        View::render('back/dashboard/index', $data);
     }
 }

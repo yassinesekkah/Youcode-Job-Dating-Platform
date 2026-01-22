@@ -113,4 +113,26 @@ abstract class Model
 
         return (bool) $stmt->fetch();
     }
+
+    public static function emailExistsExcept(string $email, int $id): bool
+    {
+        $sql = "SELECT id FROM " . static::$table . " WHERE email = :email AND id != :id LIMIT 1";
+
+        $stmt = self::$db->prepare($sql);
+        $stmt->execute([
+            'email' => $email,
+            'id' => $id
+        ]);
+        
+        return (bool) $stmt->fetch();
+    }
+
+    public static function countAll(): int
+    {
+        $sql = "SELECT COUNT(*) FROM " . static::$table ;
+        $stmt = self::$db->prepare($sql);
+        $stmt->execute();
+        return (int) $stmt->fetchColumn();
+    }
+
 }
