@@ -1,4 +1,97 @@
-<h1>Dashboard Admin</h1>
-<a href="/admin/logout" class="btn btn-danger">
-    Logout
-</a>
+{% extends "layouts/back.twig" %}
+
+{% block content %}
+
+<!-- Page Title -->
+<div class="mb-8">
+    <h1 class="text-2xl font-semibold text-gray-800">
+        Admin Dashboard
+    </h1>
+    <p class="text-sm text-gray-500 mt-1">
+        Overview of platform activity
+    </p>
+</div>
+
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+
+    <!-- Active Announcements -->
+    <div class="bg-gradient-to-br from-indigo-500 to-indigo-600
+                text-white rounded-xl shadow p-6">
+        <p class="text-sm opacity-80">Active Announcements</p>
+        <p class="text-4xl font-bold mt-2">
+            {{ activeAnnouncements }}
+        </p>
+        <p class="text-xs opacity-80 mt-4">
+            Currently visible offers
+        </p>
+    </div>
+
+    <!-- Archived Announcements -->
+    <div class="bg-gradient-to-br from-slate-500 to-slate-600
+                text-white rounded-xl shadow p-6">
+        <p class="text-sm opacity-80">Archived Announcements</p>
+        <p class="text-4xl font-bold mt-2">
+            {{ archivedAnnouncements }}
+        </p>
+        <p class="text-xs opacity-80 mt-4">
+            Hidden job offers
+        </p>
+    </div>
+
+    <!-- Companies -->
+    <div class="bg-gradient-to-br from-teal-500 to-teal-600
+                text-white rounded-xl shadow p-6">
+        <p class="text-sm opacity-80">Companies</p>
+        <p class="text-4xl font-bold mt-2">
+            {{ companiesCount }}
+        </p>
+        <p class="text-xs opacity-80 mt-4">
+            Registered partners
+        </p>
+    </div>
+
+    <!-- Students -->
+    <div class="bg-gradient-to-br from-sky-500 to-sky-600
+                text-white rounded-xl shadow p-6">
+        <p class="text-sm opacity-80">Students</p>
+        <p class="text-4xl font-bold mt-2">
+            {{ studentsCount }}
+        </p>
+        <p class="text-xs opacity-80 mt-4">
+            Active learners
+        </p>
+    </div>
+
+</div>
+
+<!-- Secondary Section -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+    <!-- Welcome Card -->
+    <div class="bg-white rounded-xl shadow p-6">
+        <h2 class="text-lg font-semibold text-gray-800 mb-2">
+            Welcome back 👋
+        </h2>
+        <p class="text-sm text-gray-600 leading-relaxed">
+            This dashboard gives you a quick overview of the Job Dating platform.
+            You can manage announcements, companies and students from the menu.
+        </p>
+    </div>
+
+    <!-- Tips / Info -->
+    <div class="bg-white rounded-xl shadow p-6">
+        <h2 class="text-lg font-semibold text-gray-800 mb-2">
+            Admin Tips
+        </h2>
+        <ul class="text-sm text-gray-600 space-y-2">
+            <li>• Keep announcements updated</li>
+            <li>• Archive expired job offers</li>
+            <li>• Manage companies carefully</li>
+            <li>• Monitor student growth</li>
+        </ul>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -127,4 +127,12 @@ abstract class Model
         return (bool) $stmt->fetch();
     }
 
+    public static function countAll(): int
+    {
+        $sql = "SELECT COUNT(*) FROM " . static::$table ;
+        $stmt = self::$db->prepare($sql);
+        $stmt->execute();
+        return (int) $stmt->fetchColumn();
+    }
+
 }
