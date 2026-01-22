@@ -149,7 +149,7 @@ class  CompanyController extends Controller
             'email',
             'phone'
         ]);
-    
+
         if (Company::emailExistsExcept($data['email'], $id)) {
             View::render('back/companies/edit', [
                 'errors' => [
@@ -166,8 +166,38 @@ class  CompanyController extends Controller
             $this->redirect('/admin/companies/edit?id=' . $id);
             return;
         }
-       
+
         Session::set('success', 'Company updated successfully');
+        $this->redirect('/admin/companies');
+    }
+
+    public function delete(): void
+    {
+        Security::requireAdmin();
+
+        Security::checkCsrfOrFail($_GET['csrf_token'] ?? null);
+
+        $id = (int) $_GET['id'] ?? 0;
+
+        if (!$id) {
+            Session::set('error', 'Invalid company');
+            $this->redirect('/admin/companies');
+            return;
+        }
+
+        if (Company::hasAnnouncements($id)) {
+            Session::set('error', 'Cannot delete company because it has associated announcements');
+            $this->redirect("/admin/companies");
+            return;
+        }
+
+        if (!Company::delete($id)) {
+            Session::set('error', 'Failed to delete company');
+            $this->redirect('/admin/companies');
+            return;
+        }
+
+        Session::set('success', 'Company deleted successfully');
         $this->redirect('/admin/companies');
     }
 }

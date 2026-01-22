@@ -62,17 +62,19 @@ $router->get('/admin/announcements/archived', 'Back\AnnouncementController@archi
 $router->get('/admin/announcements/restore', 'Back\AnnouncementController@restore');   
 
 
-/// Company create
+/// company create
 $router->get('/admin/companies/create', 'Back\\CompanyController@createForm');
 $router->post('/admin/companies/store', 'Back\\CompanyController@store');
 
-/// Affichage des entreprises
+/// affichage des entreprises
 $router->get('/admin/companies', 'Back\\CompanyController@index');
 
-/// Edit entreprise
+/// edit entreprise
 $router->get('/admin/companies/edit', 'Back\\CompanyController@editForm');
 $router->post('/admin/companies/update', 'Back\\CompanyController@update');
 
+/// delete entreprise
+$router->get('/admin/companies/delete', 'Back\\CompanyController@delete');
 
 
 
