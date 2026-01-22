@@ -5,7 +5,7 @@ use App\Core\Controller;
 use App\Core\Security;
 use App\Core\Session;
 use App\Core\Validator;
-use App\core\View;
+use App\Core\View;
 use App\Models\Company;
 
 class  CompanyController extends Controller
@@ -69,8 +69,18 @@ class  CompanyController extends Controller
 
         Session::set('success', "Company created successfully");
         $this->redirect('/admin/companies');
+    }
 
+    public function index(): void
+    {
+        Security::requireAdmin();
 
-       
+        $companies = Company::all();
+        
+        
+        View::render("back/companies/index", [
+            'companies' => $companies,
+            'csrf_token' => Security::generateCsrfToken()
+        ]);
     }
 }
