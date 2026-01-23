@@ -65,32 +65,44 @@
 
 </div>
 
-<!-- Secondary Section -->
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- Recent Announcements -->
+<div class="mt-10 bg-white rounded-xl shadow p-6">
 
-    <!-- Welcome Card -->
-    <div class="bg-white rounded-xl shadow p-6">
-        <h2 class="text-lg font-semibold text-gray-800 mb-2">
-            Welcome back 👋
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-lg font-semibold text-gray-800">
+            Recent Job Announcements
         </h2>
-        <p class="text-sm text-gray-600 leading-relaxed">
-            This dashboard gives you a quick overview of the Job Dating platform.
-            You can manage announcements, companies and students from the menu.
+
+        <a href="/admin/announcements"
+           class="text-sm text-indigo-600 hover:underline">
+            View all
+        </a>
+    </div>
+
+    {% if recentAnnouncements is empty %}
+        <p class="text-sm text-gray-500">
+            No recent announcements.
         </p>
-    </div>
+    {% else %}
+        <ul class="divide-y">
+            {% for announcement in recentAnnouncements %}
+                <li class="py-3 flex justify-between items-center">
+                    <div>
+                        <p class="text-sm font-medium text-gray-800">
+                            {{ announcement.title }}
+                        </p>
+                        <p class="text-xs text-gray-500">
+                            {{ announcement.company }}
+                        </p>
+                    </div>
 
-    <!-- Tips / Info -->
-    <div class="bg-white rounded-xl shadow p-6">
-        <h2 class="text-lg font-semibold text-gray-800 mb-2">
-            Admin Tips
-        </h2>
-        <ul class="text-sm text-gray-600 space-y-2">
-            <li>• Keep announcements updated</li>
-            <li>• Archive expired job offers</li>
-            <li>• Manage companies carefully</li>
-            <li>• Monitor student growth</li>
+                    <span class="text-xs text-gray-400">
+                        {{ announcement.created_at|date("d M Y") }}
+                    </span>
+                </li>
+            {% endfor %}
         </ul>
-    </div>
+    {% endif %}
 
 </div>
 
