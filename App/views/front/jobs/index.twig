@@ -6,6 +6,7 @@
 <h1 class="text-3xl font-bold mb-6">Offres d'emploi</h1>
 
 <div class="bg-white p-4 rounded-lg shadow mb-6 flex gap-4">
+    <input type="text" id="searchInput" placeholder="Rechercher une offre..." class="border border-gray-300 rounded px-4 py-2">
    
     <select id="companyFilter" class="border border-gray-300 rounded px-4 py-2">
         <option value="">Toutes les entreprises</option>
@@ -52,15 +53,17 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
+    const searchInput = document.getElementById('searchInput');
     const companyFilter = document.getElementById('companyFilter');
     const contractFilter = document.getElementById('contractFilter');
     const jobList = document.getElementById('jobList');
 
     function fetchFilteredJobs() {
+        const q = searchInput.value;  
         const company = companyFilter.value;
         const contract = contractFilter.value;
 
-        const params = new URLSearchParams({ company, contract });
+        const params = new URLSearchParams({q, company, contract });
 
         fetch('/jobs/ajax?' + params.toString())
             .then(res => res.text())
@@ -68,6 +71,7 @@ document.addEventListener("DOMContentLoaded", function() {
             .catch(err => console.error(err));
     }
 
+    searchInput.addEventListener('input', fetchFilteredJobs);
     companyFilter.addEventListener('change', fetchFilteredJobs);
     contractFilter.addEventListener('change', fetchFilteredJobs);
 });

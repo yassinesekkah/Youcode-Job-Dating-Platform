@@ -36,7 +36,9 @@ public static function filter($q = null, $company = null, $contract = null): arr
     $params = [];
 
     if ($q) {
-        $sql .= " AND announcements.title LIKE ?";
+        $sql .= " AND (announcements.title LIKE ? OR announcements.description LIKE ? OR companies.name LIKE ?)";
+        $params[] = "%$q%";
+        $params[] = "%$q%";
         $params[] = "%$q%";
     }
 
