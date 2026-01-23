@@ -14,12 +14,14 @@ class DashboardController extends Controller
     public function index(): void
     {
         Security::requireAdmin();
+        $recentAnnouncements = Announcement::getRecent(3);
 
         $data = [
             'activeAnnouncements'   => Announcement::countActive(),
             'archivedAnnouncements' => Announcement::countArchived(),
             'companiesCount'        => Company::countAll(),
             'studentsCount'         => Student::countStudent(),
+            'recentAnnouncements'   => $recentAnnouncements,
         ];
 
         View::render('back/dashboard/index', $data);
