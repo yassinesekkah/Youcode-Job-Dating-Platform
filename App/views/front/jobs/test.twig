@@ -1,0 +1,51 @@
+<form id="filterForm" class="bg-white p-4 rounded-lg shadow mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <input type="text" name="q" id="searchInput" placeholder="Rechercher une offre..."
+               class="border border-gray-300 rounded px-4 py-2">
+
+        <select name="company" id="companyFilter" class="border border-gray-300 rounded px-4 py-2">
+            <option value="">Toutes les entreprises</option>
+            {% set companies = [] %}
+            {% for announcement in announcements %}
+                {% if announcement.company not in companies %}
+                    {% set companies = companies|merge([announcement.company]) %}
+                    <option value="{{ announcement.company }}">{{ announcement.company }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+
+        <select name="contract" id="contractFilter" class="border border-gray-300 rounded px-4 py-2">
+            <option value="">Tous les contrats</option>
+            {% set contracts = [] %}
+            {% for announcement in announcements %}
+                {% if announcement.contract_type not in contracts %}
+                    {% set contracts = contracts|merge([announcement.contract_type]) %}
+                    <option value="{{ announcement.contract_type }}">{{ announcement.contract_type }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+    </div>
+</form>
+
+
+<div id="jobList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for announcement in announcements %}
+        <a href="/jobs/edit?id={{ announcement.id }}" class="block">
+            <div class="bg-white border border-gray-200 rounded-lg p-4 shadow hover:shadow-lg transition cursor-pointer">
+                {% if announcement.image %}
+                    <img src="{{ announcement.image|e }}" alt="{{ announcement.title|e }}"
+                         class="w-full h-48 object-cover rounded-md mb-4">
+                {% else %}
+                    <img src="/assets/images/default-job.jpg" alt="Offre d'emploi"
+                         class="w-full h-48 object-cover rounded-md mb-4">
+                {% endif %}
+                <h3 class="text-xl font-semibold mb-2">{{ announcement.title|e }}</h3>
+                <p class="text-gray-700 mb-1"><span class="font-semibold">Entreprise:</span> {{ announcement.company|e }}</p>
+                <p class="text-gray-600 text-sm mb-1"><span class="font-semibold">Contrat:</span> {{ announcement.contract_type|e }}</p>
+                <small class="text-gray-500">Publié le {{ announcement.created_at|date("d/m/Y") }}</small>
+            </div>
+        </a>
+    {% else %}
+        <p class="col-span-full text-center text-gray-500">Aucune annonce active pour le moment.</p>
+    {% endfor %}
+</div>

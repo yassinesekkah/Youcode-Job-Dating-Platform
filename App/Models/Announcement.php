@@ -21,19 +21,43 @@ class Announcement extends Model
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-
-    public static function find($id): ?array
+    public static function findAnnouncement($id)
     {
+        return parent::find($id);
+    
+}
+
+public static function filter($q = null, $company = null, $contract = null): array
+{
     $sql = "SELECT announcements.*, companies.name AS company
             FROM announcements
             JOIN companies ON companies.id = announcements.company_id
-            WHERE announcements.id = :id";
+            WHERE 1=1";
+    $params = [];
+
+    if ($q) {
+        $sql .= " AND announcements.title LIKE ?";
+        $params[] = "%$q%";
+    }
+
+    if ($company) {
+        $sql .= " AND companies.name = ?";
+        $params[] = $company;
+    }
+
+    if ($contract) {
+        $sql .= " AND announcements.contract_type = ?";
+        $params[] = $contract;
+    }
+
+    $sql .= " ORDER BY announcements.created_at DESC";
 
     $stmt = self::$db->prepare($sql);
-    $stmt->execute(['id' => $id]);
+    $stmt->execute($params);
 
-    return $stmt->fetch(\PDO::FETCH_ASSOC) ?: null;
+    return $stmt->fetchAll(\PDO::FETCH_ASSOC);
 }
+
 
 
     

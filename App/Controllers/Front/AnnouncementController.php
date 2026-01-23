@@ -2,31 +2,34 @@
 
 namespace App\Controllers;
 
+use App\Core\Controller;
 use App\Core\View;
 use App\Models\Announcement;
 
-class AnnouncementController
+class AnnouncementController extends Controller
 {
     public function show()
     {
-        $id = $_GET['id'] ?? null;
+        // $id = $_GET['id'] ?? null;
 
-        if (!$id) {
-            http_response_code(404);
-            echo "Annonce introuvable";
-            return;
-        }
+        // if (!$id) {
+        //     http_response_code(404);
+        //     echo "Annonce introuvable";
+        //     return;
+        // }
 
-        $announcement = Announcement::find($id);
+        // $announcement = Announcement::findAnnouncement($id);
 
-        if (!$announcement) {
-            http_response_code(404);
-            echo "Annonce introuvable";
-            return;
-        }
+        // if (!$announcement) {
+        //     http_response_code(404);
+        //     echo "Annonce introuvable";
+        //     return;
+        // }
 
-        View::render('front/announcements/show', [
-            'announcement' => $announcement
-        ]);
+        // View::render('front/announcements/show', [
+        //     'announcement' => $announcement
+        // ]);
+    
     }
+    
 }
