@@ -25,7 +25,7 @@ class Application extends Model
         JOIN users u ON u.id = a.student_id
         WHERE a.announcement_id = :announcement_id
         ORDER BY a.created_at DESC
-    ";
+        ";
 
         $stmt = self::$db->prepare($sql);
         $stmt->execute([
@@ -33,5 +33,19 @@ class Application extends Model
         ]);
 
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public static function updateStatus($id, $status): bool
+    {
+        $sql = "UPDATE applications
+                Set status = :status, updated_at = NOW()
+                WHERE id = :id";
+
+        $stmt = self::$db->prepare($sql);
+
+        return $stmt->execute([
+            'status' => $status,
+            'id' => $id
+        ]);
     }
 }
