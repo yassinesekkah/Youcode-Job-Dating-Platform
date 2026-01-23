@@ -21,19 +21,43 @@ class Announcement extends Model
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-
-    public static function find($id): ?array
+    public static function findAnnouncement($id)
     {
-    $sql = "SELECT announcements.*, companies.name AS company
+        return parent::find($id);
+    }
+
+    public static function filter($q = null, $company = null, $contract = null): array
+    {
+        $sql = "SELECT announcements.*, companies.name AS company
             FROM announcements
             JOIN companies ON companies.id = announcements.company_id
-            WHERE announcements.id = :id";
+            WHERE 1=1";
+        $params = [];
 
-    $stmt = self::$db->prepare($sql);
-    $stmt->execute(['id' => $id]);
+    if ($q) {
+        $sql .= " AND (announcements.title LIKE ? OR announcements.description LIKE ? OR companies.name LIKE ?)";
+        $params[] = "%$q%";
+        $params[] = "%$q%";
+        $params[] = "%$q%";
+    }
 
-    return $stmt->fetch(\PDO::FETCH_ASSOC) ?: null;
-}
+        if ($company) {
+            $sql .= " AND companies.name = ?";
+            $params[] = $company;
+        }
+
+        if ($contract) {
+            $sql .= " AND announcements.contract_type = ?";
+            $params[] = $contract;
+        }
+
+        $sql .= " ORDER BY announcements.created_at DESC";
+
+        $stmt = self::$db->prepare($sql);
+        $stmt->execute($params);
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
 
 
     public static function getArchived(): array
@@ -56,12 +80,30 @@ class Announcement extends Model
         $stmt->execute();
         return (int) $stmt->fetchColumn();
     }
-    
+
     public static function countArchived(): int
     {
         $sql = "SELECT COUNT(*) FROM announcements WHERE deleted = 1";
         $stmt = self::$db->prepare($sql);
         $stmt->execute();
         return (int) $stmt->fetchColumn();
+    }
+
+    public static function getRecent(int $limit): array
+    {
+        $sql = "
+        SELECT a.id, a.title, a.created_at, c.name AS company
+        FROM announcements a
+        JOIN companies c ON c.id = a.company_id
+        WHERE a.deleted = 0
+        ORDER BY a.created_at DESC
+        LIMIT :limit
+    ";
+
+        $stmt = self::$db->prepare($sql);
+        $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 }

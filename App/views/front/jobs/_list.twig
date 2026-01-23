@@ -1,0 +1,17 @@
+{% for announcement in announcements %}
+<a href="/jobs/edit?id={{ announcement.id }}" class="block">
+    <div class="bg-white border border-gray-200 rounded-lg p-4 shadow hover:shadow-lg transition cursor-pointer">
+        {% if announcement.image %}
+            <img src="{{ announcement.image|e }}" alt="{{ announcement.title|e }}" class="w-full h-48 object-cover rounded-md mb-4">
+        {% else %}
+            <img src="/assets/images/default-job.jpg" alt="Offre d'emploi" class="w-full h-48 object-cover rounded-md mb-4">
+        {% endif %}
+        <h3 class="text-xl font-semibold mb-2">{{ announcement.title|e }}</h3>
+        <p class="text-gray-700 mb-1"><span class="font-semibold">Entreprise:</span> {{ announcement.company|e }}</p>
+        <p class="text-gray-600 text-sm mb-1"><span class="font-semibold">Contrat:</span> {{ announcement.contract_type|e }}</p>
+        <small class="text-gray-500">Publié le {{ announcement.created_at|date("d/m/Y") }}</small>
+    </div>
+</a>
+{% else %}
+<p class="col-span-full text-center text-gray-500">Aucune annonce trouvée.</p>
+{% endfor %}

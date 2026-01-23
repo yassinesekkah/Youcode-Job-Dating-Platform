@@ -42,7 +42,9 @@ $router->get('/logout', 'Front\AuthController@logout');
 ///jobs
 // $router->get('/jobs', 'Front\JobController@index');
 $router->get('/jobs', 'Front\JobController@index');
-$router->get('/announcements/{id}', 'AnnouncementController@show');
+$router->get('/jobs/edit', 'Front\JobController@show');
+$router->get('/jobs/ajax', 'Front\JobController@ajax');
+
 
 
 
@@ -80,6 +82,10 @@ $router->get('/admin/companies/delete', 'Back\\CompanyController@delete');
 ///student affichage
 $router->get('/admin/students', "Back\\StudentController@index");
 
+/// postules affichage
+$router->get('/admin/applications', 'Back\ApplicationController@index');
+/// update status
+$router->post('/admin/applications/status','Back\ApplicationController@updateStatus');
 
 
 
