@@ -1,0 +1,61 @@
+{% extends "layouts/back.twig" %}
+
+{% block content %}
+
+<div class="flex justify-between items-center mb-8">
+    <h1 class="text-2xl font-semibold text-gray-800">
+        Students
+    </h1>
+
+    <span class="text-sm text-gray-500">
+        {{ students|length }} students registered
+    </span>
+</div>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+    {% for student in students %}
+        <div class="bg-white rounded-xl shadow hover:shadow-lg transition p-6">
+
+            <!-- Header -->
+            <div class="flex items-center gap-4 mb-4">
+                <div class="w-12 h-12 rounded-full bg-indigo-600 text-white
+                            flex items-center justify-center font-semibold">
+                    {{ student.name|slice(0,1)|upper }}
+                </div>
+
+                <div>
+                    <h2 class="text-lg font-semibold text-gray-800">
+                        {{ student.name }}
+                    </h2>
+                    <p class="text-sm text-gray-500">
+                        Apprenant
+                    </p>
+                </div>
+            </div>
+
+            <!-- Infos -->
+            <div class="text-sm text-gray-600 space-y-2">
+                <p class="flex items-center gap-2">
+                    <span>📧</span>
+                    <span class="truncate">{{ student.email }}</span>
+                </p>
+
+                {% if student.created_at %}
+                    <p class="flex items-center gap-2">
+                        <span>📅</span>
+                        <span>Joined: {{ student.created_at|date("d/m/Y") }}</span>
+                    </p>
+                {% endif %}
+            </div>
+
+        </div>
+    {% else %}
+        <p class="text-gray-500">
+            No students found.
+        </p>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

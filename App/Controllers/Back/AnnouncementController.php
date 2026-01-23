@@ -1,12 +1,11 @@
 <?php
-
 namespace App\Controllers\Back;
 
 use App\Core\Controller;
 use App\Core\Security;
 use App\Core\Session;
 use App\Core\Validator;
-use App\core\View;
+use App\Core\View;
 use App\Models\Announcement;
 use App\Models\Company;
 
@@ -117,8 +116,10 @@ class AnnouncementController extends Controller
         $announcements = Announcement::getActiveWithCompanies();
 
         View::render('back/announcements/index', [
-            'announcements' => $announcements
+            'announcements' => $announcements,
+            'csrf_token' => Security::generateCsrfToken(),
         ]);
+
     }
 
     public function editForm()
@@ -231,6 +232,8 @@ class AnnouncementController extends Controller
     {
         Security::requireAdmin();
 
+        Security::checkCsrfOrFail($_GET['csrf_token'] ?? null);
+
         $id = $_GET['id'] ?? null;
 
         if (!$id) {
@@ -239,13 +242,51 @@ class AnnouncementController extends Controller
             return;
         }
 
-        if(!Announcement::softDelete($id)){
+        if (!Announcement::softDelete($id)) {
             Session::set("error", "Failed to archive announcement");
-            $this -> redirect("/admin/announcements");
+            $this->redirect("/admin/announcements");
             return;
         }
 
         Session::set('success', "Announcement archived successfully");
-        $this -> redirect('/admin/announcements');
+        $this->redirect('/admin/announcements');
+    }
+
+    public function archivedIndex(): void
+    {
+        Security::requireAdmin();
+
+        $archivedAnnouncements = Announcement::getArchived();
+
+        View::render('back/announcements/archived', [
+            'archived' => $archivedAnnouncements,
+            'csrf_token' => Security::generateCsrfToken()
+        ]);
+    }
+
+    public function restore(): void
+    {
+        Security::requireAdmin();
+
+        Security::checkCsrfOrFail($_GET['csrf_token'] ?? null);
+
+        $id = $_GET["id"] ?? null;
+
+        if(!$id){
+            Session::set('error', 'Invalid announcement');
+            $this->redirect('/admin/announcements/archived');
+            return;
+        }
+
+        if(!Announcement::restore($id)){
+            Session::set('error', "Failed to restored announcement");
+            $this->redirect('/admin/announcements/archived');
+            return;
+        }
+
+        Session::set('success', "Announcement restored successfully");
+        $this -> redirect('/admin/announcements/archived');
+
+
     }
 }
