@@ -42,7 +42,9 @@ $router->get('/logout', 'Front\AuthController@logout');
 ///jobs
 // $router->get('/jobs', 'Front\JobController@index');
 $router->get('/jobs', 'Front\JobController@index');
-$router->get('/announcements/{id}', 'AnnouncementController@show');
+$router->get('/jobs/edit', 'Front\JobController@show');
+$router->get('/jobs/ajax', 'Front\JobController@ajax');
+
 
 
 
