@@ -59,6 +59,32 @@ public static function filter($q = null, $company = null, $contract = null): arr
 }
 
 
+    public static function getArchived(): array
+    {
+        $sql = "SELECT announcements.*, companies.name as company FROM announcements 
+                JOIN companies ON companies.id = announcements.company_id
+                WHERE announcements.deleted = 1 
+                ORDER BY announcements.created_at DESC";
 
+        $stmt = self::$db->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public static function countActive(): int
+    {
+        $sql = "SELECT COUNT(*) FROM announcements WHERE deleted = 0";
+        $stmt = self::$db->prepare($sql);
+        $stmt->execute();
+        return (int) $stmt->fetchColumn();
+    }
     
+    public static function countArchived(): int
+    {
+        $sql = "SELECT COUNT(*) FROM announcements WHERE deleted = 1";
+        $stmt = self::$db->prepare($sql);
+        $stmt->execute();
+        return (int) $stmt->fetchColumn();
+    }
 }

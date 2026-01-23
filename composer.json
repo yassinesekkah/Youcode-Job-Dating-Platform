@@ -10,6 +10,7 @@
     "apcu-autoloader": false
   },
   "require": {
-    "twig/twig": "^3.22"
+    "twig/twig": "^3.22",
+    "symfony/var-dumper": "^7.4"
   }
 }

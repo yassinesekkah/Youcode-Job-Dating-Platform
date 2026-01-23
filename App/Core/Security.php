@@ -46,7 +46,7 @@ class Security
     {
         Session::remove('csrf_token');
     }
-   
+
     public static function hashPassword(string $password): string
     {
         return password_hash($password, PASSWORD_DEFAULT);
@@ -80,6 +80,13 @@ class Security
         return Session::has('admin');
     }
 
+    public static function redirectIfAdminLogged(): void
+    {
+        if (Session::has('admin')) {
+            header('Location: /admin/dashboard');
+            exit;
+        }
+    }
 
     public static function hasPermission(string $permission): bool
     {

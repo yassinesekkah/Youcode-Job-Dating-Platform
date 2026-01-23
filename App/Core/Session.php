@@ -35,4 +35,17 @@ class Session
     {
         session_destroy();
     }
+
+    public static function getflash(): array
+    {
+        $flash = [
+            'success' => $_SESSION['success'] ?? null,
+            'error' => $_SESSION['error'] ?? null
+        ];
+
+        self::remove('success');
+        self::remove('error');
+
+        return $flash;
+    }
 }

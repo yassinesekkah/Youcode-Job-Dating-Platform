@@ -11,7 +11,7 @@ Ce projet consiste à développer un **framework PHP MVC minimaliste**, dans un 
 - L’organisation interne d’un framework backend
 
 Le framework est léger, structuré, sécurisé et extensible.
-
+   
 ---
 
 ## 🎯 Objectifs du projet

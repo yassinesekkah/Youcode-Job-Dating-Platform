@@ -32,7 +32,8 @@ class View
         return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
     }
 
-       private static ?Environment $twig = null;
+
+    private static ?Environment $twig = null;
 
     public static function render(string $template, array $data = []): void
     {
@@ -45,6 +46,8 @@ class View
                 'debug' => true,
             ]);
         }
+
+        self::$twig->addGlobal('flash', Session::getFlash());
 
         echo self::$twig->render($template . '.twig', $data);
     }
