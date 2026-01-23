@@ -1,0 +1,60 @@
+{% extends "layouts/front.twig" %}
+
+{% block title %}{{ announcement.title }}{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow">
+
+    {# Image de l'annonce #}
+    {% if announcement.image %}
+        <img src="{{ announcement.image|e }}"
+             alt="{{ announcement.title|e }}"
+             class="w-full h-64 object-cover rounded-lg mb-6">
+    {% else %}
+        <img src="/assets/images/default-job.jpg"
+             alt="Offre d'emploi"
+             class="w-full h-64 object-cover rounded-lg mb-6">
+    {% endif %}
+
+    <h1 class="text-2xl font-bold mb-6">{{ announcement.title }}</h1>
+
+    <form class="space-y-4">
+
+        <div>
+            <label class="block font-semibold">Entreprise</label>
+            <input type="text"
+                   value="{{ announcement.company }}"
+                   disabled
+                   class="w-full border p-2 rounded bg-gray-100">
+        </div>
+
+        <div>
+            <label class="block font-semibold">Type de contrat</label>
+            <input type="text"
+                   value="{{ announcement.contract_type }}"
+                   disabled
+                   class="w-full border p-2 rounded bg-gray-100">
+        </div>
+
+        <div>
+            <label class="block font-semibold">Localisation</label>
+            <input type="text"
+                   value="{{ announcement.location }}"
+                   disabled
+                   class="w-full border p-2 rounded bg-gray-100">
+        </div>
+
+        <div>
+            <label class="block font-semibold">Description</label>
+            <textarea disabled
+                      class="w-full border p-2 rounded bg-gray-100"
+                      rows="6">{{ announcement.description }}</textarea>
+        </div>
+
+        <div class="flex justify-between items-center mt-6">
+            <a href="../jobs" class="text-blue-600 hover:underline">← Retour</a>
+        </div>
+
+    </form>
+</div>
+{% endblock %}
