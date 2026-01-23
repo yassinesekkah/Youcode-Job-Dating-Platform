@@ -1,188 +1,143 @@
-# Job-Dating — Framework PHP MVC Minimaliste
+# JobLink — Job Dating Platform
 
-## 📌 Présentation du projet
+**JobLink** est une plateforme moderne de *job dating* développée en **PHP** avec une **architecture MVC personnalisée**.  
+Elle permet de mettre en relation des **étudiants** et des **entreprises** autour d’**offres d’emploi**, avec une séparation claire entre **Front Office** et **Back Office**.
 
-Ce projet consiste à développer un **framework PHP MVC minimaliste**, dans un objectif pédagogique, afin de comprendre en profondeur :
+---
 
-- L’architecture MVC
-- La gestion des routes
-- La sécurité des applications web
-- La séparation Front Office / Back Office
-- L’organisation interne d’un framework backend
+## 🌐 Démo en ligne
 
-Le framework est léger, structuré, sécurisé et extensible.
-   
+- 🔗 **Front Office (Étudiant)** :  
+  👉 https://joblink.sekkah.dev
+
+- 🔐 **Back Office (Admin)** :  
+  👉 https://joblink.sekkah.dev/admin/login  
+
+### Identifiants Admin (démo)
+- **Email** : `admin@youcode.ma`  
+- **Mot de passe** : `admin123`
+
 ---
 
 ## 🎯 Objectifs du projet
 
-- Implémenter un routeur personnalisé
-- Comprendre le flux :
-  **Request → Controller → Model → View**
-- Mettre en place des mécanismes de sécurité essentiels
-- Gérer l’authentification et les autorisations
-- Séparer clairement le Front Office du Back Office
-- Intégrer Twig comme moteur de templates
+- Mettre en pratique une **architecture MVC** sans framework
+- Implémenter une **authentification sécurisée**
+- Gérer des **annonces d’emploi**, **entreprises**, **étudiants** et **candidatures**
+- Respecter les bonnes pratiques de **sécurité web**
+- Proposer une interface **moderne et intuitive**
 
 ---
 
-## 🚦 Fonctionnement global
+## 🧱 Architecture Technique
 
-1. La requête HTTP arrive sur `public/index.php`
-2. Initialisation :
-   - Autoload Composer
-   - Sessions
-   - Connexion à la base de données (Singleton)
-   - Gestion centralisée des erreurs
-3. Le routeur analyse l’URL et la méthode HTTP
-4. Le contrôleur correspondant est exécuté
-5. Le modèle interagit avec la base de données
-6. La vue affiche le résultat (PHP ou Twig)
+- **Langage** : PHP (POO)
+- **Architecture** : MVC personnalisé
+- **Vues** : Twig
+- **Base de données** : MySQL
+- **Accès DB** : PDO + requêtes préparées
+- **CSS** : Tailwind CSS
+- **JavaScript** : Vanilla JS
 
 ---
 
-## 🧭 Routing
-
-Les routes sont définies dans `config/routes.php`.
-
-Exemple :
-
-```php
-$router->get('/', 'Front\\HomeController@index');
-$router->get('/login', 'Front\\AuthController@loginForm');
-$router->post('/login', 'Front\\AuthController@login');
-$router->get('/admin', 'Back\\AdminController@dashboard');
-```
-
-🧩 Architecture MVC
-Model
-
-Classe Model générique avec opérations CRUD
-
-Utilisation de PDO et des requêtes préparées
-
-Protection contre les injections SQL
-
-Controller
-
-Contient la logique métier
-
-Validation des données
-
-Gestion de l’authentification et des permissions
-
-Redirections et rendu des vues
-
-View
-
-Vues PHP et Twig
-
-Aucune logique métier
-
-Layouts séparés pour le Front et le Back Office
-
-
-🛡️ Sécurité
-
-Protection CSRF (token + vérification)
-
-Protection contre les attaques XSS
-
-Hashage des mots de passe
-
-Vérification des mots de passe
-
-Gestion sécurisée des sessions
-
-Rôles utilisateurs
-
-Permissions et ACL
-
-Protection des routes sensibles
-
-
-🔐 Authentification & Autorisations
-
-Inscription et connexion des utilisateurs
-
-Stockage des informations utilisateur en session
-
-Vérification du rôle et des permissions
-
-Accès restreint au Back Office
-
-
-⚠️ Gestion des erreurs
-
-Gestion centralisée des erreurs
-
-Pages d’erreurs personnalisées :
-
-403 — Accès refusé
-
-404 — Page non trouvée
-
-500 — Erreur serveur
-
-Mode debug configurable pour faciliter le développement
-
-
-🎨 Twig
-
-Intégration de Twig via Composer
-
-
-Utilisé pour :
-
-les pages d’authentification
-
-l’affichage des erreurs
-
-Séparation stricte entre logique métier et affichage
-
-
-⚡ Optimisation des performances
-
-Autoload PSR-4 avec Composer
-
-Connexion base de données en Singleton
-
-Routeur léger
-
-Requêtes préparées
-
-Cache Twig activable
-
-Mode debug désactivable en production
-
-
-🚀 Installation
-
-Cloner le projet
-
-Installer les dépendances :
-
-composer install
-
-
-Configurer la base de données
-
-Lancer le serveur :
-
-php -S localhost:8000 -t public
-
-📝 Conclusion
-
-Ce framework a été développé dans un objectif pédagogique afin de maîtriser :
-
-l’architecture MVC
-
-la sécurité web
-
-la structuration d’un framework backend
-
-Il constitue une base solide pour des projets plus avancés.
-
-👨‍💻 Auteur
-
-Projet réalisé dans le cadre d’un apprentissage en développement web backend.
+## 🔐 Sécurité
+
+- Protection **CSRF** sur tous les formulaires
+- Validation **serveur-side**
+- Sessions sécurisées
+- Contrôle strict des rôles (Admin / Étudiant)
+- Upload sécurisé (CV PDF uniquement – bonus)
+- Accès restreint aux données sensibles
+
+---
+
+## 👤 Rôles & Fonctionnalités
+
+### 🧑‍🎓 Étudiant (Front Office)
+- Authentification (Login / Register)
+- Consultation des offres d’emploi actives
+- Postuler à une offre (une seule fois par annonce)
+- Suivi de ses candidatures *(en cours d’extension)*
+
+### 🛠️ Administrateur (Back Office)
+- Dashboard avec statistiques globales
+- Gestion des annonces :
+  - Création
+  - Modification
+  - Archivage / Restauration
+- Gestion des entreprises (CRUD)
+- Consultation des étudiants
+- Gestion des candidatures :
+  - Visualisation par annonce
+  - Mise à jour du statut (En attente / Acceptée / Refusée)
+
+---
+
+## 📊 Dashboard Admin
+
+- Nombre d’annonces actives
+- Nombre d’annonces archivées
+- Nombre d’entreprises
+- Nombre d’étudiants
+- Liste des annonces récentes
+
+---
+
+## 🗃️ Modèle de données (extrait)
+
+### announcements
+- id
+- title
+- company_id
+- description
+- location
+- contract_type
+- skills
+- image
+- deleted
+- created_at
+- updated_at
+
+### companies
+- id
+- name
+- sector
+- location
+- email
+- phone
+- avatar
+- created_at
+- updated_at
+
+### users (students)
+- id
+- name
+- email
+- password
+- role
+- promotion
+- specialization
+- created_at
+
+### applications
+- id
+- student_id
+- announcement_id
+- motivation
+- cv_path
+- status (pending | accepted | rejected)
+- created_at
+- updated_at
+
+---
+
+## 🎨 Interface Utilisateur
+
+- Design **moderne** et **responsive**
+- Identité visuelle cohérente (JobLink)
+- UX inspirée des plateformes SaaS
+- Pages d’authentification type *landing page*
+- Navigation claire et intuitive
+
+---

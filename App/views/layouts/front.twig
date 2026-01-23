@@ -4,55 +4,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title|default('Job Dating • Front Office') }}</title>
-
-
+    <title>{{ title|default('JobLink • Front Office') }}</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-gray-50 min-h-screen flex flex-col">
 
-<!-- Navbar -->
-<header class="bg-white border-b border-gray-200">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <!-- Navbar -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
-    
-        <a href="/jobs" class="text-2xl font-bold text-blue-600">
-            Job<span class="text-gray-900">Dating</span>
-        </a>
-        <div class="flex items-center gap-6">
-           
-                <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-semibold">
-                        {{ student_name }}
+            <!-- Logo -->
+            <a href="/jobs" class="flex items-center gap-2">
+                <div class="w-9 h-9 rounded-lg bg-indigo-600
+                        text-white flex items-center justify-center font-bold">
+                    JL
+                </div>
+                <span class="text-xl font-semibold text-gray-900">
+                    Job<span class="text-indigo-600">Link</span>
+                </span>
+            </a>
+
+            <!-- Right side -->
+            <div class="relative">
+
+                <!-- User Icon Button -->
+                <button id="userMenuBtn" class="w-10 h-10 rounded-full bg-indigo-600 text-white
+                   flex items-center justify-center
+                   hover:bg-indigo-700 transition">
+
+                    <!-- User Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M5.121 17.804A13.937 13.937 0 0112 15c2.5 0 4.847.655 6.879 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                </button>
+
+                <!-- Dropdown -->
+                <div id="userMenu" class="absolute right-0 mt-2 w-44 bg-white rounded-lg shadow-lg
+                border border-gray-200 hidden z-50">
+
+                    <!-- Profile (soon) -->
+                    <div class="px-4 py-2 text-sm text-gray-400 cursor-not-allowed">
+                        👤 Mon profil <span class="text-xs">(soon)</span>
                     </div>
-                    <span class="text-gray-800 font-medium">
-                        {{ student_name }}
-                    </span>
+
+                    <div class="border-t"></div>
+
+                    <!-- Logout -->
+                    <a href="/logout" class="block px-4 py-2 text-sm text-red-600
+                  hover:bg-red-50 transition">
+                        🚪 Déconnexion
+                    </a>
                 </div>
 
-                <a href="/logout"
-                   class="text-sm text-red-500 hover:text-red-600 font-medium">
-                    Déconnexion
-                </a>
-        
+            </div>
+
         </div>
-    </div>
-</header>
 
-<main class="flex-1 max-w-7xl mx-auto px-6 py-8">
-    {% block content %}
-    {% endblock %}
-</main>
+        </div>
+    </header>
 
-<footer class="bg-gray-900 text-gray-300">
-    <div class="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row justify-center items-center gap-4">
-        <p class="text-sm">
-            © {{ "now"|date("Y") }} Job Dating — Tous droits réservés
-        </p>
-    </div>
-</footer>
+    <!-- Content -->
+    <main class="flex-1 max-w-7xl mx-auto px-6 py-10">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-300">
+        <div class="max-w-7xl mx-auto px-6 py-10 grid md:grid-cols-3 gap-8">
+
+            <!-- Brand -->
+            <div>
+                <div class="flex items-center gap-2 mb-3">
+                    <div class="w-8 h-8 rounded-lg bg-indigo-600
+                            text-white flex items-center justify-center font-bold">
+                        JL
+                    </div>
+                    <span class="text-lg font-semibold text-white">
+                        JobLink
+                    </span>
+                </div>
+                <p class="text-sm text-slate-400">
+                    Connecter les étudiants aux opportunités professionnelles.
+                </p>
+            </div>
+
+            <!-- Links -->
+                <div>
+                    <h4 class="text-sm font-semibold text-white mb-3">
+                        Navigation
+                    </h4>
+                    <ul class="space-y-2 text-sm">
+
+                        <!-- Active -->
+                        <li>
+                            <a href="/jobs" class="hover:text-white transition">
+                                Offres d’emploi
+                            </a>
+                        </li>
+
+                        <!-- Disabled -->
+                        <li class="text-slate-500 cursor-not-allowed">
+                            Mes candidatures <span class="text-xs">(soon)</span>
+                        </li>
+
+                        <li class="text-slate-500 cursor-not-allowed">
+                            Mon profil <span class="text-xs">(soon)</span>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <!-- Legal -->
+                <div>
+                    <h4 class="text-sm font-semibold text-white mb-3">
+                        Légal
+                    </h4>
+                    <ul class="space-y-2 text-sm">
+
+                        <li class="text-slate-500 cursor-not-allowed">
+                            Mentions légales <span class="text-xs">(soon)</span>
+                        </li>
+
+                        <li class="text-slate-500 cursor-not-allowed">
+                            Politique de confidentialité <span class="text-xs">(soon)</span>
+                        </li>
+
+                    </ul>
+                </div>
+
+
+        </div>
+
+        <div class="border-t border-slate-800 py-4 text-center text-sm text-slate-500">
+            © {{ "now"|date("Y") }} JobLink — Tous droits réservés
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.getElementById('userMenuBtn');
+            const menu = document.getElementById('userMenu');
+
+            if (!btn || !menu) return;
+
+            // Toggle dropdown
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                menu.classList.toggle('hidden');
+            });
+
+            // Close when clicking outside
+            document.addEventListener('click', () => {
+                if (!menu.classList.contains('hidden')) {
+                    menu.classList.add('hidden');
+                }
+            });
+        });
+    </script>
 
 </body>
+
 </html>

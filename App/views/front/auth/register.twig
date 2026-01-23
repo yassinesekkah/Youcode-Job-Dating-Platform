@@ -2,75 +2,123 @@
 
 {% block content %}
 
-{% if errors %}
-    <div class="alert alert-danger">
-        <ul>
-            {% for field, messages in errors %}
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            {% endfor %}
-        </ul>
-    </div>
-{% endif %}
+<div class="min-h-screen flex items-center justify-center
+            bg-gradient-to-br from-indigo-600 via-indigo-700 to-indigo-900 px-4">
 
-<div class="login-container">
-    <div class="logo">
-        <h1>Create Account</h1>
-        <p>Register to access job opportunities</p>
-    </div>
+    <!-- Register Card -->
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8">
 
-    <form action="/register" method="POST">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token|default('') }}">
+        <!-- Logo / Title -->
+        <div class="text-center mb-6">
+            <div class="flex justify-center items-center gap-2 mb-3">
+                <div class="w-9 h-9 rounded-lg bg-indigo-600
+                            text-white flex items-center justify-center font-bold">
+                    JL
+                </div>
+                <h1 class="text-2xl font-semibold text-gray-800">
+                    Job<span class="text-indigo-600">Link</span>
+                </h1>
+            </div>
 
-        <div class="form-group">
-            <label for="name">Full Name</label>
-            <input
-                type="text"
-                id="name"
-                name="name"
-                placeholder="Your full name"
-            >
+            <h2 class="text-xl font-semibold text-gray-800">
+                Create an account
+            </h2>
+            <p class="text-sm text-gray-500">
+                It’s quick and easy
+            </p>
         </div>
 
-        <div class="form-group">
-            <label for="email">Email Address</label>
-            <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="you@example.com"
-            >
+        <!-- Errors -->
+        {% if errors %}
+            <div class="mb-4 rounded-md bg-red-100 border border-red-300
+                        text-red-700 p-3 text-sm">
+                <ul class="list-disc list-inside">
+                    {% for field, messages in errors %}
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <!-- Form -->
+        <form action="/register" method="POST" class="space-y-3">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">
+                    Full Name
+                </label>
+                <input type="text" name="name" required
+                       placeholder="Your full name"
+                       class="w-full rounded-md border border-gray-300
+                              px-3 py-2 text-sm
+                              focus:outline-none focus:ring-2
+                              focus:ring-indigo-500">
+            </div>
+
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">
+                    Email Address
+                </label>
+                <input type="email" name="email" required
+                       placeholder="you@example.com"
+                       class="w-full rounded-md border border-gray-300
+                              px-3 py-2 text-sm
+                              focus:outline-none focus:ring-2
+                              focus:ring-indigo-500">
+            </div>
+
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">
+                    Password
+                </label>
+                <input type="password" name="password" required
+                       placeholder="Create a password"
+                       class="w-full rounded-md border border-gray-300
+                              px-3 py-2 text-sm
+                              focus:outline-none focus:ring-2
+                              focus:ring-indigo-500">
+            </div>
+
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">
+                    Confirm Password
+                </label>
+                <input type="password" name="password_confirm" required
+                       placeholder="Confirm your password"
+                       class="w-full rounded-md border border-gray-300
+                              px-3 py-2 text-sm
+                              focus:outline-none focus:ring-2
+                              focus:ring-indigo-500">
+            </div>
+
+            <!-- Facebook-like CTA -->
+            <button type="submit"
+                    class="w-full mt-4 bg-indigo-600 hover:bg-indigo-700
+                           text-white py-2.5 rounded-lg
+                           font-semibold transition">
+                Sign Up
+            </button>
+        </form>
+
+        <!-- Divider -->
+        <div class="my-6 flex items-center gap-3 text-gray-400 text-xs">
+            <div class="flex-1 h-px bg-gray-300"></div>
+            OR
+            <div class="flex-1 h-px bg-gray-300"></div>
         </div>
 
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Create a password"
-            >
+        <!-- Login link -->
+        <div class="text-center text-sm text-gray-600">
+            Already have an account?
+            <a href="/login"
+               class="text-indigo-600 hover:underline font-medium">
+                Sign in
+            </a>
         </div>
 
-        <div class="form-group">
-            <label for="password_confirm">Confirm Password</label>
-            <input
-                type="password"
-                id="password_confirm"
-                name="password_confirm"
-                placeholder="Confirm your password"
-            >
-        </div>
-
-        <button type="submit" class="btn btn-primary">
-            Sign Up 
-        </button>
-    </form>
-
-    <div class="register-link">
-        Already have an account?
-        <a href="/login">Sign in</a>
     </div>
 </div>
 
