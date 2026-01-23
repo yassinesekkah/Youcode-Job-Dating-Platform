@@ -83,9 +83,8 @@ $router->get('/admin/companies/delete', 'Back\\CompanyController@delete');
 $router->get('/admin/students', "Back\\StudentController@index");
 
 /// postules affichage
-$router->get(
-    '/admin/applications', 'Back\ApplicationController@index');
-
+$router->get('/admin/applications', 'Back\ApplicationController@index');
+/// update status
 $router->post('/admin/applications/status','Back\ApplicationController@updateStatus');
 
 
