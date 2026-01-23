@@ -2,39 +2,139 @@
 
 {% block content %}
 
-{% if errors %}
-    <div class="alert alert-danger">
-        <ul>
-            {% for field, messages in errors %}
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            {% endfor %}
-        </ul>
-    </div>
-{% endif %}
+<div class="min-h-screen flex
+            bg-gradient-to-br from-indigo-600 via-indigo-700 to-indigo-900">
 
-<div class="login-container">
-    <div class="logo">
-        <h1>Admin Login</h1>
-        <p>Sign in to access the administration panel</p>
-    </div>
+    <!-- LEFT SIDE -->
+    <div class="hidden lg:flex w-1/2 px-16 text-white">
 
-    <form action="/admin/login" method="POST">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <div class="flex flex-col justify-between w-full">
 
-        <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" placeholder="admin@youcode.ma" required>
+            <!-- Logo -->
+            <div class="flex items-center gap-3 mt-10">
+                <div class="w-10 h-10 rounded-lg bg-white
+                            text-indigo-700 flex items-center justify-center font-bold">
+                    JL
+                </div>
+                <h1 class="text-2xl font-semibold">
+                    Job<span class="text-indigo-200">Link</span>
+                </h1>
+            </div>
+
+            <!-- Center Text -->
+            <div class="flex flex-col justify-center flex-1 max-w-xl">
+
+                <h2 class="text-5xl font-extrabold leading-tight mb-6">
+                    Connect talents<br>
+                    <span class="text-indigo-200">
+                        with opportunities
+                    </span>
+                </h2>
+
+                <p class="text-indigo-100 text-lg leading-relaxed">
+                    JobLink is a modern job dating platform that connects
+                    students and companies through real opportunities.
+                </p>
+
+            </div>
+
+            <!-- Icons -->
+            <div class="mb-10 text-5xl opacity-80">
+                💼 🔗 🎓
+            </div>
+
         </div>
+    </div>
 
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+    <!-- RIGHT SIDE -->
+    <div class="w-full lg:w-1/2 flex items-center justify-center px-6">
+
+        <!-- WHITE LOGIN BOX -->
+        <div class="w-full max-w-md
+                    bg-white rounded-2xl
+                    shadow-2xl p-8">
+
+            <!-- Title -->
+            <div class="mb-6 text-center">
+                <h2 class="text-2xl font-semibold text-gray-800">
+                    Admin Login
+                </h2>
+                <p class="text-sm text-gray-500 mt-1">
+                    Access the administration panel
+                </p>
+            </div>
+
+            <!-- Errors -->
+            {% if errors %}
+                <div class="mb-4 rounded-md
+                            bg-red-100 border border-red-300
+                            text-red-700 p-3 text-sm">
+                    <ul class="list-disc list-inside">
+                        {% for field, messages in errors %}
+                            {% for message in messages %}
+                                <li>{{ message }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <!-- Form -->
+            <form action="/admin/login" method="POST" class="space-y-4">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+                <div>
+                    <label class="block text-xs font-medium text-gray-600 mb-1">
+                        Email Address
+                    </label>
+                    <input type="email" name="email" required
+                           placeholder="admin@joblink.dev"
+                           class="w-full rounded-md
+                                  border border-gray-300
+                                  px-3 py-2 text-sm text-gray-800
+                                  focus:outline-none focus:ring-2
+                                  focus:ring-indigo-500">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-gray-600 mb-1">
+                        Password
+                    </label>
+                    <input type="password" name="password" required
+                           placeholder="••••••••"
+                           class="w-full rounded-md
+                                  border border-gray-300
+                                  px-3 py-2 text-sm text-gray-800
+                                  focus:outline-none focus:ring-2
+                                  focus:ring-indigo-500">
+                </div>
+
+                <button type="submit"
+                        class="w-full bg-indigo-600 hover:bg-indigo-700
+                               text-white py-2 rounded-lg
+                               font-semibold transition">
+                    Sign In
+                </button>
+            </form>
+
+            <!-- Divider -->
+            <div class="my-6 flex items-center gap-3 text-gray-400 text-xs">
+                <div class="flex-1 h-px bg-gray-300"></div>
+                OR
+                <div class="flex-1 h-px bg-gray-300"></div>
+            </div>
+
+            <!-- User Login -->
+            <div class="text-center">
+                <a href="/login"
+                   class="text-sm text-indigo-600
+                          hover:underline font-medium">
+                    Login as User
+                </a>
+            </div>
+
         </div>
-
-        <button type="submit" class="btn btn-primary">Sign In</button>
-    </form>
+    </div>
 </div>
 
 {% endblock %}

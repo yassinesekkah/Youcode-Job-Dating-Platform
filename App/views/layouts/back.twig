@@ -18,11 +18,24 @@
 
         <!-- Sidebar -->
         <aside class="fixed left-0 top-0 w-64 h-screen bg-slate-900 text-slate-100 flex flex-col">
-            <div class="px-6 py-5 border-b border-slate-800">
-                <h1 class="text-lg font-semibold tracking-wide">
-                    Job Dating
-                    <span class="block text-xs text-slate-400">Admin Panel</span>
-                </h1>
+            <div class="px-16 py-5 border-b border-slate-800 flex items-center gap-2">
+
+                <!-- Logo Icon -->
+                <div class="w-9 h-9 rounded-lg bg-indigo-600
+                flex items-center justify-center text-white font-bold">
+                    JL
+                </div>
+
+                <!-- Logo Text -->
+                <div>
+                    <h1 class="text-lg font-semibold tracking-wide leading-tight">
+                        Job<span class="text-indigo-400">Link</span>
+                    </h1>
+                    <span class="block text-xs text-slate-400">
+                        Admin Panel
+                    </span>
+                </div>
+
             </div>
 
             <nav class="flex-1 px-4 py-6 space-y-2">
@@ -113,21 +126,21 @@
     </div>
 
     <script>
-    const toast = document.getElementById('toast');
+        const toast = document.getElementById('toast');
 
-    if (toast) {
-        
-        setTimeout(() => {
-            toast.classList.remove('translate-y-10', 'opacity-0');
-        }, 100);
+        if (toast) {
 
-        
-        setTimeout(() => {
-            toast.classList.add('translate-y-10', 'opacity-0');
-            setTimeout(() => toast.remove(), 500);
-        }, 3000);
-    }
-</script>
+            setTimeout(() => {
+                toast.classList.remove('translate-y-10', 'opacity-0');
+            }, 100);
+
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-10', 'opacity-0');
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
+    </script>
 </body>
 
 </html>
