@@ -34,10 +34,12 @@ class Announcement extends Model
             WHERE 1=1";
         $params = [];
 
-        if ($q) {
-            $sql .= " AND announcements.title LIKE ?";
-            $params[] = "%$q%";
-        }
+    if ($q) {
+        $sql .= " AND (announcements.title LIKE ? OR announcements.description LIKE ? OR companies.name LIKE ?)";
+        $params[] = "%$q%";
+        $params[] = "%$q%";
+        $params[] = "%$q%";
+    }
 
         if ($company) {
             $sql .= " AND companies.name = ?";
