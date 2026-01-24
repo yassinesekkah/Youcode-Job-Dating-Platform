@@ -34,12 +34,12 @@ class Announcement extends Model
             WHERE 1=1";
         $params = [];
 
-    if ($q) {
-        $sql .= " AND (announcements.title LIKE ? OR announcements.description LIKE ? OR companies.name LIKE ?)";
-        $params[] = "%$q%";
-        $params[] = "%$q%";
-        $params[] = "%$q%";
-    }
+        if ($q) {
+            $sql .= " AND (announcements.title LIKE ? OR announcements.description LIKE ? OR companies.name LIKE ?)";
+            $params[] = "%$q%";
+            $params[] = "%$q%";
+            $params[] = "%$q%";
+        }
 
         if ($company) {
             $sql .= " AND companies.name = ?";
@@ -98,10 +98,31 @@ class Announcement extends Model
         WHERE a.deleted = 0
         ORDER BY a.created_at DESC
         LIMIT :limit
-    ";
+        ";
 
         $stmt = self::$db->prepare($sql);
         $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public static function search(string $q): array
+    {
+        $sql = "
+        SELECT 
+            announcements.*,
+            companies.name AS company
+        FROM announcements
+        INNER JOIN companies 
+            ON companies.id = announcements.company_id
+        WHERE announcements.deleted = 0
+          AND announcements.title LIKE :q
+        ORDER BY announcements.created_at DESC
+        ";
+
+        $stmt = self::$db->prepare($sql);
+        $stmt->bindValue(':q', '%' . $q . '%', \PDO::PARAM_STR);
         $stmt->execute();
 
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);

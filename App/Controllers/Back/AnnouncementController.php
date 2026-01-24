@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers\Back;
 
 use App\Core\Controller;
@@ -114,12 +115,10 @@ class AnnouncementController extends Controller
         Security::requireAdmin();
 
         $announcements = Announcement::getActiveWithCompanies();
-
         View::render('back/announcements/index', [
             'announcements' => $announcements,
             'csrf_token' => Security::generateCsrfToken(),
         ]);
-
     }
 
     public function editForm()
@@ -272,21 +271,33 @@ class AnnouncementController extends Controller
 
         $id = $_GET["id"] ?? null;
 
-        if(!$id){
+        if (!$id) {
             Session::set('error', 'Invalid announcement');
             $this->redirect('/admin/announcements/archived');
             return;
         }
 
-        if(!Announcement::restore($id)){
+        if (!Announcement::restore($id)) {
             Session::set('error', "Failed to restored announcement");
             $this->redirect('/admin/announcements/archived');
             return;
         }
 
         Session::set('success', "Announcement restored successfully");
-        $this -> redirect('/admin/announcements/archived');
+        $this->redirect('/admin/announcements/archived');
+    }
 
+    public function ajaxSearch(): void
+    {
+        Security::requireAdmin();
 
+        $q = $_GET['q'] ?? '';
+
+        $announcements = Announcement::search($q);
+
+        View::render('back/announcements/_announcements', [
+            'announcements' => $announcements,
+            'csrf_token' => Security::generateCsrfToken()
+        ]);
     }
 }
