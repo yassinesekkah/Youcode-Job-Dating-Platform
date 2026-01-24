@@ -5,16 +5,16 @@ abstract class Controller
 {
     protected string $viewsPath = __DIR__ . "/../views/";
 
-    ///kaysaweb l path pour utiliser sur les classes enfants
-    protected function renders(string $view, array $data = []): void
-    {   
-        ///hna extract kadir transfer lel keys l variables
-        if(!empty($data)){
-            extract($data);
-        }
+    // ///kaysaweb l path pour utiliser sur les classes enfants
+    // protected function renders(string $view, array $data = []): void
+    // {   
+    //     ///hna extract kadir transfer lel keys l variables
+    //     if(!empty($data)){
+    //         extract($data);
+    //     }
 
-        require $this -> viewsPath . $view . ".php";
-    }
+    //     require $this -> viewsPath . $view . ".php";
+    // }
     protected function render(string $view, array $data = []): void
     {   
          View::render($view, $data);

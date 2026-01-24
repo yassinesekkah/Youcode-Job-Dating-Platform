@@ -3,7 +3,7 @@ use App\core\Router;
 
  /** @var Router $router */
 
-$router->get('/', 'Front\\HomeController@index');
+// $router->get('/', 'Front\\HomeController@index');
 
 // $router->get('/test', 'Front\\TestController@form');
 // $router->post('/test', 'Front\\TestController@submit');
@@ -41,7 +41,7 @@ $router->get('/logout', 'Front\AuthController@logout');
 
 ///jobs
 // $router->get('/jobs', 'Front\JobController@index');
-$router->get('/jobs', 'Front\JobController@index');
+$router->get('/', 'Front\JobController@index');
 $router->get('/jobs/edit', 'Front\JobController@show');
 $router->get('/jobs/ajax', 'Front\JobController@ajax');
 

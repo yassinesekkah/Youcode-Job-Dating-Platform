@@ -9,22 +9,22 @@ class View
     private static string $viewPath = __DIR__ . "/../views/";
     private static string $layoutPath = __DIR__ . "/../views/layouts/";
 
-    public static function renders(
-        string $view,
-        array $data = [],
-        string $layout = 'front'
-    ): void 
-    {
-        if (!empty($data)) {
-            extract($data);
-        }
+    // public static function renders(
+    //     string $view,
+    //     array $data = [],
+    //     string $layout = 'front'
+    // ): void 
+    // {
+    //     if (!empty($data)) {
+    //         extract($data);
+    //     }
 
-        ob_start();
-        require self::$viewPath . $view . ".php";
-        $content = ob_get_clean();
+    //     ob_start();
+    //     require self::$viewPath . $view . ".php";
+    //     $content = ob_get_clean();
 
-        require self::$layoutPath . $layout . ".php";
-    }
+    //     require self::$layoutPath . $layout . ".php";
+    // }
 
     /// nman3o XSS
     public static function e(string $value): string
