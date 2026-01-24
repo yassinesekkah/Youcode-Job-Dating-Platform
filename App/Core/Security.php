@@ -66,6 +66,14 @@ class Security
         }
     }
 
+    public static function redirectIfLogged(): void
+    {
+        if (Session::has('user')) {
+            header("Location: /");
+            exit;
+        }
+    }
+
     // BACK ==> Admin
     public static function requireAdmin(): void
     {
