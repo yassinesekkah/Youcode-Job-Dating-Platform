@@ -3,58 +3,90 @@
 {% block title %}{{ announcement.title }}{% endblock %}
 
 {% block content %}
-<div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow">
 
-    {# Image de l'annonce #}
-    {% if announcement.image %}
-        <img src="{{ announcement.image|e }}"
-             alt="{{ announcement.title|e }}"
-             class="w-full h-64 object-cover rounded-lg mb-6">
-    {% else %}
-        <img src="/assets/images/default-job.jpg"
-             alt="Offre d'emploi"
-             class="w-full h-64 object-cover rounded-lg mb-6">
-    {% endif %}
+<div class="max-w-5xl mx-auto">
 
-    <h1 class="text-2xl font-bold mb-6">{{ announcement.title }}</h1>
+    <!-- Header -->
+    <div class="mb-10">
+        <div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl p-8 text-white">
+            <span class="inline-block bg-white/20 px-4 py-1 rounded-full text-sm mb-4">
+                {{ announcement.contract_type }}
+            </span>
 
-    <form class="space-y-4">
+            <h1 class="text-4xl font-bold mb-2">
+                {{ announcement.title }}
+            </h1>
 
-        <div>
-            <label class="block font-semibold">Entreprise</label>
-            <input type="text"
-                   value="{{ announcement.company }}"
-                   disabled
-                   class="w-full border p-2 rounded bg-gray-100">
+            <p class="text-blue-100 text-lg">
+                {{ announcement.company }} • {{ announcement.location }}
+            </p>
         </div>
+    </div>
 
-        <div>
-            <label class="block font-semibold">Type de contrat</label>
-            <input type="text"
-                   value="{{ announcement.contract_type }}"
-                   disabled
-                   class="w-full border p-2 rounded bg-gray-100">
+    <!-- Content Card -->
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+
+        {% if announcement.image %}
+            <img src="{{ announcement.image|e }}"
+                 alt="{{ announcement.title|e }}"
+                 class="w-full h-72 object-cover">
+        {% endif %}
+
+        <div class="p-8 space-y-8">
+
+            <!-- Infos -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-gray-50 rounded-lg p-4">
+                    <p class="text-xs text-gray-500 mb-1">Entreprise</p>
+                    <p class="font-semibold text-gray-800">
+                        {{ announcement.company }}
+                    </p>
+                </div>
+
+                <div class="bg-gray-50 rounded-lg p-4">
+                    <p class="text-xs text-gray-500 mb-1">Type de contrat</p>
+                    <p class="font-semibold text-gray-800">
+                        {{ announcement.contract_type }}
+                    </p>
+                </div>
+
+                <div class="bg-gray-50 rounded-lg p-4">
+                    <p class="text-xs text-gray-500 mb-1">Localisation</p>
+                    <p class="font-semibold text-gray-800">
+                        {{ announcement.location }}
+                    </p>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div>
+                <h2 class="text-xl font-semibold text-gray-800 mb-3">
+                    Description du poste
+                </h2>
+                <p class="text-gray-700 leading-relaxed whitespace-pre-line">
+                    {{ announcement.description }}
+                </p>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6 border-t">
+
+                <a href="/"
+                   class="text-blue-600 hover:underline text-sm">
+                    ← Retour aux offres
+                </a>
+
+                <button
+                    class="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium
+                           hover:bg-blue-700 transition opacity-60 cursor-not-allowed"
+                    disabled>
+                    Postuler (bientôt disponible)
+                </button>
+
+            </div>
         </div>
+    </div>
 
-        <div>
-            <label class="block font-semibold">Localisation</label>
-            <input type="text"
-                   value="{{ announcement.location }}"
-                   disabled
-                   class="w-full border p-2 rounded bg-gray-100">
-        </div>
-
-        <div>
-            <label class="block font-semibold">Description</label>
-            <textarea disabled
-                      class="w-full border p-2 rounded bg-gray-100"
-                      rows="6">{{ announcement.description }}</textarea>
-        </div>
-
-        <div class="flex justify-between items-center mt-6">
-            <a href="../jobs" class="text-blue-600 hover:underline">← Retour</a>
-        </div>
-
-    </form>
 </div>
+
 {% endblock %}

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers\Front;
 
 use App\Core\Controller;
@@ -20,7 +21,6 @@ class JobController extends Controller
     public function show()
     {
         $id = $_GET['id'] ?? null;
-
         if (!$id) {
             http_response_code(404);
             echo "Annonce introuvable";
@@ -28,8 +28,6 @@ class JobController extends Controller
         }
 
         $announcement = Announcement::findAnnouncement($id);
-
-
         if (!$announcement) {
             http_response_code(404);
             echo "Annonce introuvable";
@@ -39,20 +37,17 @@ class JobController extends Controller
         View::render('front/jobs/show', [
             'announcement' => $announcement
         ]);
-       
-    
     }
+
     public function ajax(): void
-{
-    $q = $_GET['q'] ?? null;
-    $company = $_GET['company'] ?? null;
-    $contract = $_GET['contract'] ?? null;
+    {
+        $q = $_GET['q'] ?? null;
+        $company = $_GET['company'] ?? null;
+        $contract = $_GET['contract'] ?? null;
 
-    $announcements = Announcement::filter($q, $company, $contract);
-    View::render('front/jobs/_list', [
-        'announcements' => $announcements
-    ]);
-}
-
-    
+        $announcements = Announcement::filter($q, $company, $contract);
+        View::render('front/jobs/_cards', [
+            'announcements' => $announcements
+        ]);
+    }
 }
