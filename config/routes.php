@@ -46,8 +46,6 @@ $router->get('/show', 'Front\JobController@show');
 $router->get('/jobs/ajax', 'Front\JobController@ajax');
 
 
-
-
 //creation des annonneces
 $router->get('/admin/announcements/create', 'Back\AnnouncementController@createForm');
 $router->post('/admin/announcements/create', 'Back\AnnouncementController@store');
@@ -87,6 +85,8 @@ $router->get('/admin/applications', 'Back\ApplicationController@index');
 /// update status
 $router->post('/admin/applications/status','Back\ApplicationController@updateStatus');
 
+///ajax back/announcements
+$router->get('/admin/announcements/ajax', 'Back\AnnouncementController@ajaxSearch');
 
 
 

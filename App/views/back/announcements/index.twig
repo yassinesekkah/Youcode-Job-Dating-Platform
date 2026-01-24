@@ -12,84 +12,45 @@
         + Create Announcement
     </a>
 </div>
-
-<div class="bg-white rounded-xl shadow overflow-x-auto">
-    <table class="min-w-full text-sm text-left text-gray-600">
-        <thead class="bg-gray-100 text-gray-700 uppercase text-xs">
-            <tr>
-                <th class="px-6 py-3">Image</th>
-                <th class="px-6 py-3">Title</th>
-                <th class="px-6 py-3">Company</th>
-                <th class="px-6 py-3">Contract</th>
-                <th class="px-6 py-3">Location</th>
-                <th class="px-6 py-3 text-center">Actions</th>
-            </tr>
-        </thead>
-
-        <tbody class="divide-y">
-            {% for announcement in announcements %}
-            <tr class="hover:bg-gray-50">
-                <td class="px-6 py-3">
-                    {% if announcement.image %}
-                    <img src="{{ announcement.image }}" alt="image" class="w-14 h-14 object-cover rounded-md">
-                    {% else %}
-                    <span class="text-gray-400 text-xs">No image</span>
-                    {% endif %}
-                </td>
-
-                <td class="px-6 py-3 font-medium text-gray-800">
-                    {{ announcement.title }}
-                </td>
-
-                <td class="px-6 py-3">
-                    {{ announcement.company }}
-                </td>
-
-                <td class="px-6 py-3">
-                    {{ announcement.contract_type }}
-                </td>
-
-                <td class="px-6 py-3">
-                    {{ announcement.location }}
-                </td>
-
-                <td class="px-6 py-3 text-center space-x-2">
-
-                    <!-- Edit -->
-                    <a href="/admin/announcements/edit?id={{ announcement.id }}" class="inline-flex items-center gap-1 px-2 py-1 rounded-md
-              text-xs font-medium text-indigo-600 bg-indigo-50
-              hover:bg-indigo-100 transition">
-                        ✏️ Edit
-                    </a>
-
-                    <!-- Archive -->
-                    <a href="/admin/announcements/archive?id={{ announcement.id }}&csrf_token={{ csrf_token }}"
-                        onclick="return confirm('Are you sure you want to archive this announcement?')" class="inline-flex items-center gap-1 px-2 py-1 rounded-md
-              text-xs font-medium text-red-600 bg-red-50
-              hover:bg-red-100 transition">
-                        🗄️ Archive
-                    </a>
-
-                    <!-- Applications -->
-                    <a href="/admin/applications?announcement_id={{ announcement.id }}" class="inline-flex items-center gap-1 px-2 py-1 rounded-md
-              text-xs font-medium text-emerald-600 bg-emerald-50
-              hover:bg-emerald-100 transition">
-                        👥 Applications
-                    </a>
-
-                </td>
-
-
-            </tr>
-            {% else %}
-            <tr>
-                <td colspan="6" class="px-6 py-6 text-center text-gray-500">
-                    No announcements found.
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<div class="mb-6">
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="Search an annonce..."
+        class="w-full max-w-md border rounded-lg px-4 py-2"
+    >
 </div>
+
+<div id="announcementList">
+    {% include "back/announcements/_announcements.twig" with {
+        announcements: announcements,
+        csrf_token: csrf_token
+    } %}
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const searchInput = document.getElementById('searchInput');
+    const list = document.getElementById('announcementList');
+
+    let timeout = null;
+
+    searchInput.addEventListener('input', function () {
+
+        clearTimeout(timeout);
+
+        timeout = setTimeout(() => {
+            const query = searchInput.value;
+
+            fetch('/admin/announcements/ajax?q=' + encodeURIComponent(query))
+                .then(res => res.text())
+                .then(html => list.innerHTML = html)
+                .catch(err => console.error(err));
+        }, 300); 
+    });
+
+});
+</script>
 
 {% endblock %}
