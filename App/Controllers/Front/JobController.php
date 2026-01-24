@@ -4,13 +4,13 @@ namespace App\Controllers\Front;
 use App\Core\Controller;
 use App\Models\Announcement;
 use App\Core\Security;
-use App\core\View;
+use App\Core\View;
 
 class JobController extends Controller
 {
     public function index(): void
     {
-         Security::requireAuth();
+        Security::requireAuth();
         $announcements = Announcement::getActiveWithCompanies();
         $this->render('front/jobs/index', [
             'announcements' => $announcements

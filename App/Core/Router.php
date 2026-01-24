@@ -2,6 +2,8 @@
 
 namespace App\Core;
 
+use App\Core\View;
+
 class Router
 {
     private array $routes = [];

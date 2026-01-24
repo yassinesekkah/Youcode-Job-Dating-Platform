@@ -6,6 +6,8 @@
 /**
  * Configuration de la base de données
  */
+define('BASE_URL', 'https://linkjob.sekkah.dev/');
+
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'youcode_job_dating');
 define('DB_USER', 'root');

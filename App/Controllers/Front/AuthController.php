@@ -147,7 +147,7 @@ class AuthController extends Controller
         ]);
 
         ////rediction
-        $this->redirect('/jobs');
+        $this->redirect('/');
     }
 
 
