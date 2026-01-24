@@ -14,6 +14,7 @@ class AuthController extends Controller
 
     public function loginForm()
     {
+        Security::redirectIfLogged();
         View::render('front/auth/login', [
             'csrf_token' => Security::generateCsrfToken()
         ]);
@@ -21,6 +22,7 @@ class AuthController extends Controller
 
     public function registerForm()
     {
+        Security::redirectIfLogged();
         View::render('front/auth/register', [
             'csrf_token' => Security::generateCsrfToken()
         ]);
