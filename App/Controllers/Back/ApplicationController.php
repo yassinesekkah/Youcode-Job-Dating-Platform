@@ -5,7 +5,7 @@ namespace App\Controllers\Back;
 use App\Core\Controller;
 use App\Core\Security;
 use App\Core\Session;
-use App\core\View;
+use App\Core\View;
 use App\Models\Application;
 
 class ApplicationController extends Controller

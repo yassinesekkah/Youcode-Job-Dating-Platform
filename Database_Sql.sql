@@ -15,11 +15,10 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
--- Listage de la structure de la base pour youcode_job_dating
-CREATE DATABASE IF NOT EXISTS `youcode_job_dating` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `youcode_job_dating`;
 
--- Listage de la structure de table youcode_job_dating. announcements
+USE `sekkgcsq_joblink_db`;
+
+-- Listage de la structure de table sekkgcsq_joblink_db. announcements
 CREATE TABLE IF NOT EXISTS `announcements` (
   `id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -37,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `announcements` (
   CONSTRAINT `fk_announcements_company` FOREIGN KEY (`company_id`) REFERENCES `companies` (`id`) ON DELETE RESTRICT
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table youcode_job_dating.announcements : ~19 rows (environ)
+-- Listage des données de la table sekkgcsq_joblink_db.announcements : ~19 rows (environ)
 DELETE FROM `announcements`;
 INSERT INTO `announcements` (`id`, `title`, `description`, `contract_type`, `location`, `image`, `skills`, `company_id`, `deleted`, `created_at`, `updated_at`) VALUES
 	(2, 'Duis inventore et qu', 'Esse quia itaque ni', 'Freelance', 'Odio officia delectu', '/assets/images/ann_696e8e148a95e.png', 'Et reiciendis offici', 1, 1, '2026-01-19 20:03:32', NULL),
@@ -60,7 +59,7 @@ INSERT INTO `announcements` (`id`, `title`, `description`, `contract_type`, `loc
 	(19, 'test', 'Commodo numquam est', 'CDD', 'Laboris soluta magni', '/assets/images/ann_696f94d656330.png', 'Saepe aperiam qui et', 5, 1, '2026-01-20 11:06:45', '2026-01-20 22:05:21'),
 	(20, 'Harum quas ratione e', 'Et repellendus Itaq', 'CDD', 'Consectetur rerum a', '/assets/images/ann_69708aa5554e1.png', 'Laboris quia numquam', 3, 1, '2026-01-21 08:13:25', '2026-01-21 08:13:45');
 
--- Listage de la structure de table youcode_job_dating. companies
+-- Listage de la structure de table sekkgcsq_joblink_db. companies
 CREATE TABLE IF NOT EXISTS `companies` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -74,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `companies` (
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table youcode_job_dating.companies : ~5 rows (environ)
+-- Listage des données de la table sekkgcsq_joblink_db.companies : ~5 rows (environ)
 DELETE FROM `companies`;
 INSERT INTO `companies` (`id`, `name`, `sector`, `location`, `email`, `phone`, `avatar`, `created_at`) VALUES
 	(1, 'OCP Group', 'Industrie', 'Casablanca', 'contact@ocpgroup.ma', '+212600000001', NULL, '2026-01-19 19:01:57'),
@@ -83,7 +82,7 @@ INSERT INTO `companies` (`id`, `name`, `sector`, `location`, `email`, `phone`, `
 	(4, 'YouCode', 'Éducation', 'Youssoufia', 'admin@youcode.ma', '+212600000004', NULL, '2026-01-19 19:01:57'),
 	(5, 'WebHelp', 'Call Center', 'Casablanca', 'hr@webhelp.com', '+212600000005', NULL, '2026-01-19 19:01:57');
 
--- Listage de la structure de table youcode_job_dating. students
+-- Listage de la structure de table sekkgcsq_joblink_db. students
 CREATE TABLE IF NOT EXISTS `students` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
@@ -94,10 +93,10 @@ CREATE TABLE IF NOT EXISTS `students` (
   CONSTRAINT `fk_students_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table youcode_job_dating.students : ~0 rows (environ)
+-- Listage des données de la table sekkgcsq_joblink_db.students : ~0 rows (environ)
 DELETE FROM `students`;
 
--- Listage de la structure de table youcode_job_dating. users
+-- Listage de la structure de table sekkgcsq_joblink_db. users
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -108,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table youcode_job_dating.users : ~4 rows (environ)
+-- Listage des données de la table sekkgcsq_joblink_db.users : ~4 rows (environ)
 DELETE FROM `users`;
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `created_at`) VALUES
 	(1, 'Admin YouCode', 'admin@youcode.ma', '$2y$10$F15HBGdtJGnsS02Dt8Jt2..GBhbHHrZcQ0bDbc6ATV/EOW8jtT8TW', 'admin', '2026-01-19 11:37:45'),
