@@ -12,6 +12,19 @@ use App\Models\Application;
 
 class ApplicationController extends Controller
 {
+    public function index(): void
+    {
+        Security::requireAuth();
+        
+        $studentId = $_SESSION['user']['id'];
+
+        $applications = Application::getByStudent($studentId);
+
+        View::render('front/applications/index', [
+            'applications' => $applications
+        ]);
+    }
+
     public function createForm(): void
     {
         Security::requireAuth();
@@ -32,7 +45,7 @@ class ApplicationController extends Controller
             return;
         }
 
-        View::render('front/application/create', [
+        View::render('front/applications/create', [
             'announcement' => $announcement,
             'csrf_token'   => Security::generateCsrfToken()
         ]);
@@ -55,7 +68,7 @@ class ApplicationController extends Controller
 
         //check announcement
         $announcement = Announcement::find($announcementId);
-        
+
         if (!$announcement || $announcement['deleted'] == 1) {
             Session::set('error', "Cette offre n'est plus disponible");
             $this->redirect('/');
@@ -108,7 +121,7 @@ class ApplicationController extends Controller
         }
 
         Session::set('success', 'Votre candidature a été envoyée avec succès');
-        $this->redirect('/show?id=' . $announcementId);
+        $this->redirect('/applications');
     }
 
     ///private 

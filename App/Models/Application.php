@@ -64,4 +64,26 @@ class Application extends Model
 
         return (bool) $stmt->fetch();
     }
+
+    public static function getByStudent(int $studentId): array
+    {
+        $sql = "
+        SELECT 
+            applications.status,
+            applications.created_at,
+            announcements.title AS announcement_title,
+            companies.name AS company_name
+        FROM applications
+        JOIN announcements ON announcements.id = applications.announcement_id
+        JOIN companies ON companies.id = announcements.company_id
+        WHERE applications.student_id = :student_id
+        ORDER BY applications.created_at DESC";
+
+        $stmt = self::$db->prepare($sql);
+        $stmt->execute([
+            'student_id' => $studentId
+        ]);
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }
