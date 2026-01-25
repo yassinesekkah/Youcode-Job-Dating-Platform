@@ -16,7 +16,6 @@ class ApplicationController extends Controller
         $announcementId = $_GET['announcement_id'] ?? null;
 
 
-
         if (!$announcementId) {
             Session::set('error', 'Invalid announcement');
             $this->redirect('/admin/announcements');
@@ -24,7 +23,7 @@ class ApplicationController extends Controller
         }
 
         $applications = Application::getByAnnouncement($announcementId);
-
+        
         View::render('back/applications/index', [
             'applications' => $applications,
             'csrf_token' => Security::generateCsrfToken()

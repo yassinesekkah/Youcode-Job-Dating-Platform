@@ -49,6 +49,8 @@ $router->get('/jobs/ajax', 'Front\JobController@ajax');
 $router->get('/applications/create', 'Front\ApplicationController@createForm');
 ///postuler store
 $router->post('/applications/store', 'Front\ApplicationController@store');
+///front office application index
+$router->get('/applications', 'Front\ApplicationController@index');
 
 
 //creation des annonneces
