@@ -45,6 +45,13 @@ $router->get('/', 'Front\JobController@index');
 $router->get('/show', 'Front\JobController@show');
 $router->get('/jobs/ajax', 'Front\JobController@ajax');
 
+///postuler afficher form
+$router->get('/applications/create', 'Front\ApplicationController@createForm');
+///postuler store
+$router->post('/applications/store', 'Front\ApplicationController@store');
+///front office application index
+$router->get('/applications', 'Front\ApplicationController@index');
+
 
 //creation des annonneces
 $router->get('/admin/announcements/create', 'Back\AnnouncementController@createForm');
@@ -80,7 +87,7 @@ $router->get('/admin/companies/delete', 'Back\\CompanyController@delete');
 ///student affichage
 $router->get('/admin/students', "Back\\StudentController@index");
 
-/// postules affichage
+/// postules affichage back office
 $router->get('/admin/applications', 'Back\ApplicationController@index');
 /// update status
 $router->post('/admin/applications/status','Back\ApplicationController@updateStatus');

@@ -1,0 +1,125 @@
+{% extends "layouts/front.twig" %}
+
+{% block title %}Postuler{% endblock %}
+
+{% block content %}
+
+<div class="max-w-3xl mx-auto space-y-6">
+
+    {# ================= OFFER INFO ================= #}
+    <div class="bg-white rounded-xl shadow overflow-hidden">
+
+        {% if announcement.image %}
+            <img src="{{ announcement.image }}"
+                 alt="{{ announcement.title }}"
+                 class="w-full h-56 object-cover">
+        {% endif %}
+
+        <div class="p-6">
+            <h1 class="text-2xl font-bold text-gray-800 mb-2">
+                {{ announcement.title }}
+            </h1>
+
+            <div class="flex flex-wrap gap-4 text-sm text-gray-600">
+                <span class="flex items-center gap-1">
+                    🏢 <strong>{{ announcement.company }}</strong>
+                </span>
+
+                <span class="flex items-center gap-1">
+                    📄 {{ announcement.contract_type }}
+                </span>
+
+                <span class="flex items-center gap-1">
+                    📍 {{ announcement.location }}
+                </span>
+            </div>
+        </div>
+    </div>
+
+    {# ================= FORM ================= #}
+    <div class="bg-white rounded-xl shadow p-8">
+
+        <h2 class="text-xl font-semibold text-gray-800 mb-1">
+            Postuler à cette offre
+        </h2>
+
+        <p class="text-gray-500 mb-6 text-sm">
+            Complétez le formulaire ci-dessous pour envoyer votre candidature.
+        </p>
+
+        {% if errors %}
+            <div class="mb-4 rounded-md bg-red-100 border border-red-300 text-red-700 p-3 text-sm">
+                <ul class="list-disc list-inside">
+                    {% for field, messages in errors %}
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <form
+            method="POST"
+            action="/applications/store"
+            enctype="multipart/form-data"
+            class="space-y-5"
+        >
+
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <input type="hidden" name="announcement_id" value="{{ announcement.id }}">
+
+            <!-- Motivation -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                    Message de motivation <span class="text-red-500">*</span>
+                </label>
+                <textarea
+                    name="motivation"
+                    rows="6"
+                    required
+                    class="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm
+                           focus:ring-2 focus:ring-blue-500"
+                    placeholder="Expliquez pourquoi vous êtes intéressé par cette offre..."
+                ></textarea>
+            </div>
+
+            <!-- CV -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                    CV (PDF uniquement)
+                </label>
+                <input
+                    type="file"
+                    name="cv"
+                    accept="application/pdf"
+                    class="block w-full text-sm text-gray-600
+                           file:mr-4 file:py-2 file:px-4
+                           file:rounded-md file:border-0
+                           file:bg-blue-50 file:text-blue-700
+                           hover:file:bg-blue-100"
+                >
+            </div>
+
+            <!-- Actions -->
+            <div class="flex justify-between items-center pt-4">
+                <a href="/jobs"
+                   class="text-sm text-gray-500 hover:underline">
+                    ← Retour aux offres
+                </a>
+
+                <button
+                    type="submit"
+                    class="bg-blue-600 text-white px-6 py-2 rounded-lg font-medium
+                           hover:bg-blue-700 transition">
+                    Envoyer ma candidature
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

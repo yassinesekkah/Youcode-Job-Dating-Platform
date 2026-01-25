@@ -48,4 +48,42 @@ class Application extends Model
             'id' => $id
         ]);
     }
+
+    public static function exists(int $studentId, int $announcementId): bool
+    {
+        $sql = "SELECT id FROM applications 
+            WHERE student_id = :student_id 
+              AND announcement_id = :announcement_id
+            LIMIT 1";
+
+        $stmt = self::$db->prepare($sql);
+        $stmt->execute([
+            'student_id' => $studentId,
+            'announcement_id' => $announcementId
+        ]);
+
+        return (bool) $stmt->fetch();
+    }
+
+    public static function getByStudent(int $studentId): array
+    {
+        $sql = "
+        SELECT 
+            applications.status,
+            applications.created_at,
+            announcements.title AS announcement_title,
+            companies.name AS company_name
+        FROM applications
+        JOIN announcements ON announcements.id = applications.announcement_id
+        JOIN companies ON companies.id = announcements.company_id
+        WHERE applications.student_id = :student_id
+        ORDER BY applications.created_at DESC";
+
+        $stmt = self::$db->prepare($sql);
+        $stmt->execute([
+            'student_id' => $studentId
+        ]);
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }

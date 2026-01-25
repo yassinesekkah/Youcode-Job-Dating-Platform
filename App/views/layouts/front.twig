@@ -7,6 +7,9 @@
     <title>{{ title|default('JobLink • Front Office') }}</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="/assets/favicon.png" type="image/png">
+   
+
 </head>
 
 <body class="bg-gray-50 min-h-screen flex flex-col">
@@ -27,40 +30,48 @@
             </a>
 
             <!-- Right side -->
-            <div class="relative">
+            <!-- Right side -->
+            <div class="flex items-center gap-4">
 
-                <!-- User Icon Button -->
-                <button id="userMenuBtn" class="w-10 h-10 rounded-full bg-indigo-600 text-white
+                <!-- Jobs -->
+                <a href="/" class="text-sm font-medium text-gray-700 hover:text-indigo-600 transition">
+                    Offres
+                </a>
+
+                <!-- My applications -->
+                <a href="/applications" class="text-sm font-medium text-gray-700 hover:text-indigo-600 transition">
+                    Mes candidatures
+                </a>
+
+                <!-- User dropdown -->
+                <div class="relative">
+                    <button id="userMenuBtn" class="w-10 h-10 rounded-full bg-indigo-600 text-white
                    flex items-center justify-center
                    hover:bg-indigo-700 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M5.121 17.804A13.937 13.937 0 0112 15c2.5 0 4.847.655 6.879 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </button>
 
-                    <!-- User Icon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M5.121 17.804A13.937 13.937 0 0112 15c2.5 0 4.847.655 6.879 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                </button>
+                    <div id="userMenu" class="absolute right-0 mt-2 w-44 bg-white rounded-lg shadow-lg
+                    border border-gray-200 hidden z-50">
 
-                <!-- Dropdown -->
-                <div id="userMenu" class="absolute right-0 mt-2 w-44 bg-white rounded-lg shadow-lg
-                border border-gray-200 hidden z-50">
+                        <div class="px-4 py-2 text-sm text-gray-400 cursor-not-allowed">
+                            👤 Mon profil <span class="text-xs">(soon)</span>
+                        </div>
 
-                    <!-- Profile (soon) -->
-                    <div class="px-4 py-2 text-sm text-gray-400 cursor-not-allowed">
-                        👤 Mon profil <span class="text-xs">(soon)</span>
+                        <div class="border-t"></div>
+
+                        <a href="/logout" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition">
+                            🚪 Déconnexion
+                        </a>
                     </div>
-
-                    <div class="border-t"></div>
-
-                    <!-- Logout -->
-                    <a href="/logout" class="block px-4 py-2 text-sm text-red-600
-                  hover:bg-red-50 transition">
-                        🚪 Déconnexion
-                    </a>
                 </div>
 
             </div>
+
 
         </div>
 
@@ -93,48 +104,50 @@
             </div>
 
             <!-- Links -->
-                <div>
-                    <h4 class="text-sm font-semibold text-white mb-3">
-                        Navigation
-                    </h4>
-                    <ul class="space-y-2 text-sm">
+            <div>
+                <h4 class="text-sm font-semibold text-white mb-3">
+                    Navigation
+                </h4>
+                <ul class="space-y-2 text-sm">
 
-                        <!-- Active -->
-                        <li>
-                            <a href="/jobs" class="hover:text-white transition">
-                                Offres d’emploi
-                            </a>
-                        </li>
+                    <!-- Active -->
+                    <li>
+                        <a href="/" class="hover:text-white transition">
+                            Offres d'emploi
+                        </a>
+                    </li>
 
-                        <!-- Disabled -->
-                        <li class="text-slate-500 cursor-not-allowed">
-                            Mes candidatures <span class="text-xs">(soon)</span>
-                        </li>
 
-                        <li class="text-slate-500 cursor-not-allowed">
-                            Mon profil <span class="text-xs">(soon)</span>
-                        </li>
+                    <li>
+                        <a href="/applications" class="hover:text-white transition">
+                            Mes candidatures
+                        </a>
+                    </li>
+                    <!-- Disabled -->
+                    <li class="text-slate-500 cursor-not-allowed">
+                        Mon profil <span class="text-xs">(soon)</span>
+                    </li>
 
-                    </ul>
-                </div>
+                </ul>
+            </div>
 
-                <!-- Legal -->
-                <div>
-                    <h4 class="text-sm font-semibold text-white mb-3">
-                        Légal
-                    </h4>
-                    <ul class="space-y-2 text-sm">
+            <!-- Legal -->
+            <div>
+                <h4 class="text-sm font-semibold text-white mb-3">
+                    Légal
+                </h4>
+                <ul class="space-y-2 text-sm">
 
-                        <li class="text-slate-500 cursor-not-allowed">
-                            Mentions légales <span class="text-xs">(soon)</span>
-                        </li>
+                    <li class="text-slate-500 cursor-not-allowed">
+                        Mentions légales <span class="text-xs">(soon)</span>
+                    </li>
 
-                        <li class="text-slate-500 cursor-not-allowed">
-                            Politique de confidentialité <span class="text-xs">(soon)</span>
-                        </li>
+                    <li class="text-slate-500 cursor-not-allowed">
+                        Politique de confidentialité <span class="text-xs">(soon)</span>
+                    </li>
 
-                    </ul>
-                </div>
+                </ul>
+            </div>
 
 
         </div>
