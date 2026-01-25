@@ -127,4 +127,24 @@ class Announcement extends Model
 
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
+
+    public static function findWithCompany(int $id): array
+    {
+        $sql = "
+        SELECT 
+            announcements.*,
+            companies.name AS company
+        FROM announcements
+        JOIN companies 
+            ON companies.id = announcements.company_id
+        WHERE announcements.deleted = 0
+          AND announcements.id = :id
+        LIMIT 1
+        ";
+
+        $stmt = self::$db->prepare($sql);
+        $stmt->execute(['id' => $id]);
+
+        return $stmt->fetch(\PDO::FETCH_ASSOC) ?: null;
+    }
 }
