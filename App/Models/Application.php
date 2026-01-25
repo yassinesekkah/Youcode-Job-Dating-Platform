@@ -48,4 +48,20 @@ class Application extends Model
             'id' => $id
         ]);
     }
+
+    public static function exists(int $studentId, int $announcementId): bool
+    {
+        $sql = "SELECT id FROM applications 
+            WHERE student_id = :student_id 
+              AND announcement_id = :announcement_id
+            LIMIT 1";
+
+        $stmt = self::$db->prepare($sql);
+        $stmt->execute([
+            'student_id' => $studentId,
+            'announcement_id' => $announcementId
+        ]);
+
+        return (bool) $stmt->fetch();
+    }
 }
