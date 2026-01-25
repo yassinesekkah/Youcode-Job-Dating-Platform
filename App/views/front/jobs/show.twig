@@ -27,9 +27,7 @@
     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
 
         {% if announcement.image %}
-            <img src="{{ announcement.image|e }}"
-                 alt="{{ announcement.title|e }}"
-                 class="w-full h-72 object-cover">
+        <img src="{{ announcement.image|e }}" alt="{{ announcement.title|e }}" class="w-full h-72 object-cover">
         {% endif %}
 
         <div class="p-8 space-y-8">
@@ -71,17 +69,14 @@
             <!-- Actions -->
             <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6 border-t">
 
-                <a href="/"
-                   class="text-blue-600 hover:underline text-sm">
+                <a href="/" class="text-blue-600 hover:underline text-sm">
                     ← Retour aux offres
                 </a>
 
-                <button
-                    class="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium
-                           hover:bg-blue-700 transition opacity-60 cursor-not-allowed"
-                    disabled>
-                    Postuler (bientôt disponible)
-                </button>
+                <a href="/applications/create?announcement_id={{ announcement.id }}" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-medium
+          hover:bg-blue-700 transition">
+                    Postuler
+                </a>
 
             </div>
         </div>
